@@ -1,0 +1,26 @@
+{
+  "name": "grad-test-automation",
+  "version": "1.0.0",
+  "description": "e2e testing cases using testcafe.",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bcgov/EDUC-GRAD-TEST-AUTOMATION.git"
+  },
+  "keywords": [
+    "grad",
+    "test",
+    "automation",
+    "educ"
+  ],
+  "author": "chris.ditcher",
+  "bugs": {
+    "url": "https://github.com/bcgov/EDUC-GRAD-TEST-AUTOMATION/issues"
+  },
+  "homepage": "https://github.com/bcgov/EDUC-GRAD-TEST-AUTOMATION#readme"
+}
