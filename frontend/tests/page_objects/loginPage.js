@@ -15,8 +15,8 @@ class loginPage {
         //for (let i = 0; i < 10; i++) {
             try {
                 await t.typeText(this.username, credentials.username, { timeout: 20000 })
-                    typeText(this.password, credentials.password, { timeout: 20000 })
-                    click(this.submitButton);
+                    .typeText(this.password, credentials.password, { timeout: 20000 })
+                    .click(this.submitButton);
                 await t.expect((this.penSearch).exists).ok({ timeout: 20000 });
                 log.info("Staff user successfully logged in:    " + credentials.username);
                 //break;
