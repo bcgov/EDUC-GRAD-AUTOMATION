@@ -17,8 +17,11 @@ nconf.defaults({
         dev_base_url: 'https://dev.grad.gov.bc.ca'
       },
     credential: {
-        user: 'genericuser5',
-        pass: 'xW67Kn@lo'
+        user: process.env.TEST_USERNAME,
+        pass: process.env.TEST_PASSWORD
+    },
+    test: {
+        pen: '126187343'
     }
 });
 
