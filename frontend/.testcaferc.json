@@ -2,7 +2,7 @@
     "browsers": "chrome --incognito",
     "reporter": "list",
     "screenshots": {
-        "path": "tests/e2e/screenshots/",
+        "path": "tests/screenshots/",
         "pathPattern": "${DATE}_${TIME}/test-${TEST_INDEX}/${USERAGENT}/${TEST}.png",
         "takeOnFails": false,
         "fullPage": false
