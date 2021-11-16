@@ -6,7 +6,7 @@
     "test": "tests"
   },
   "scripts": {
-    "grad-login": "testcafe ./tests/test_cases/grad-login.js"
+    "smoke-test": "testcafe chrome --incognito ./tests/test_cases/smoke-test.js"
   },
   "repository": {
     "type": "git",
