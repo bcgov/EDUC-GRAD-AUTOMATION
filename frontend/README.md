@@ -23,7 +23,7 @@ TEST_PASSWORD (valid password)
 
 There are multiple ways to do this. For example:
 
-Add a .env (.gitignored) file to the root of this directory with your environment variables in the following format:
+Add a `.env` (gitignored) file to the root of this directory with your environment variables in the following format:
 
 ```
 <KEY>=<VALUE>
@@ -38,11 +38,11 @@ Example shell script:
 ```
 # simple shell script for automating tests
 # set env vars
-export TEST_USERNAME=testuser
-export TEST_PASSWORD=dummypass
+export TEST_USERNAME=<myTestUserName>
+export TEST_PASSWORD=<myTestPassword>
 echo "-- running smoke test"
 # run a test
 npm run smoke-test
 ```
 
-Tests can be run from the root of this directory by calling `npm run <testname>` to invoke scripts defined in the package.json file. Tests can also be called explicitly by invoking the test like: `testcafe chrome:headless --incognito ./tests/test_cases/smoke-test.js`, etc.
+Tests can be run from the root of this directory by calling `npm run <testname>` to invoke scripts defined in the [package.json](package.json) file. Tests can also be called explicitly by invoking the test like: `testcafe chrome:headless --incognito ./tests/test_cases/smoke-test.js`, etc.
