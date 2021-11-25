@@ -23,4 +23,5 @@ data.*
 *.njsproj
 *.sln
 D00.json
+# local environment vars
 .env
