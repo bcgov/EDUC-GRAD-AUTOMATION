@@ -5,9 +5,9 @@ const log = require('npmlog');
 class loginPage {
 
     constructor() {
-        this.username = Selector('#username')
+        this.username = Selector('#user')
         this.password = Selector('#password')
-        this.submitButton = Selector('#kc-login')
+        this.submitButton = Selector('input[name="btnSubmit"]')
         this.penSearch = Selector('#search-by-pen')
     };
 

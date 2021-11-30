@@ -1,5 +1,6 @@
 {
-    "browsers": ["chrome --incognito"],
+    "_comment": "browsers should accept: edge -private, firefox -private-window, chrome -incognito",
+    "browsers": ["chrome -incognito"],
     "reporter": "list",
     "screenshots": {
         "path": "tests/screenshots/",

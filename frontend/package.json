@@ -6,7 +6,7 @@
     "test": "tests"
   },
   "scripts": {
-    "smoke-test": "testcafe chrome --incognito ./tests/test_cases/smoke-test.js"
+    "smoke-test": "testcafe ./tests/test_cases/smoke-test.js"
   },
   "repository": {
     "type": "git",
