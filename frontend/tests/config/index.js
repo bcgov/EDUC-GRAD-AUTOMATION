@@ -14,7 +14,7 @@ nconf.argv()
 
 nconf.defaults({
     url: {
-        dev_base_url: 'https://dev.grad.gov.bc.ca'
+        base_url: 'https://dev.grad.gov.bc.ca'
       },
     credential: {
         user: process.env.TEST_USERNAME,
