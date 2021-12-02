@@ -1,6 +1,6 @@
 import loginPage from '../page_objects/loginPage';
 import studentSearchPage from '../page_objects/studentSearchPage';
-import { base_url, keycloackCredentials, test_pen } from '../config/constants';
+import { base_url, keycloakAdminCredentials, test_pen } from '../config/constants';
 
 const log = require('npmlog');
 const login = new loginPage();
@@ -14,7 +14,7 @@ fixture `grad-login`
 
 test('login', async t => {
 
-    await login.staffLogin(keycloackCredentials, base_url);
+    await login.staffLogin(keycloakAdminCredentials, base_url);
     log.info('login complete.');
     await searchPage.searchByPen(test_pen);
     log.info('pen search complete.');

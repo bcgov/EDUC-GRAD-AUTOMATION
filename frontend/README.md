@@ -17,8 +17,8 @@ can be found [here](https://testcafe.io/documentation/402635/getting-started).
 The tests require certain environment variables to be set:
 
 ```
-TEST_USERNAME (a valid user credential for logging into GRAD)
-TEST_PASSWORD (valid password)
+TEST_ADMIN_USERNAME (a valid user credential for logging into GRAD)
+TEST_ADMIN_PASSWORD (valid password)
 ```
 
 There are multiple ways to do this. For example:
@@ -38,8 +38,8 @@ Example shell script:
 ```
 # simple shell script for automating tests
 # set env vars
-export TEST_USERNAME=<myTestUserName>
-export TEST_PASSWORD=<myTestPassword>
+export TEST_ADMIN_USERNAME=<myTestUserName>
+export TEST_ADMIN_PASSWORD=<myTestPassword>
 echo "-- running smoke test"
 # run a test
 npm run smoke-test
