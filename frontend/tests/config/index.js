@@ -21,7 +21,7 @@ nconf.defaults({
         pass: process.env.TEST_ADMIN_PASSWORD
     },
     test: {
-        pen: '126187343'
+        pen: process.env.TEST_PEN
     }
 });
 

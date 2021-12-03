@@ -9,6 +9,7 @@ class studentSearchPage {
         this.searchInput = Selector('.search > input');
         this.searchSubmit = Selector('.search > button');
         //TODO: add adv search selectors
+        
     }
 
     async searchByPen(pen) {
