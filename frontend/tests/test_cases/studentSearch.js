@@ -6,16 +6,14 @@ const log = require('npmlog');
 const login = new loginPage();
 const searchPage = new studentSearchPage();
 
-fixture `grad-login`
+fixture `grad-login-admin`
     .page(base_url)
     .beforeEach(async t => {
-        await t.maximizeWindow()
+        await t.maximizeWindow();
     });
 
-test('login', async t => {
-
+test('Pen Search', async t => {
     await login.staffLogin(keycloakAdminCredentials, base_url);
-    log.info('login complete.');
     await searchPage.searchByPen(test_pen);
-    log.info('pen search complete.');
+    // additional search tests
 });

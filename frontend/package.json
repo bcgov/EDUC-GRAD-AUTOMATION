@@ -6,7 +6,7 @@
     "test": "tests"
   },
   "scripts": {
-    "smoke-test": "testcafe ./tests/test_cases/smoke-test.js"
+    "smoke-test": "node --max-http-header-size=81000 tests/test_suites/smoke-test.js"
   },
   "repository": {
     "type": "git",
