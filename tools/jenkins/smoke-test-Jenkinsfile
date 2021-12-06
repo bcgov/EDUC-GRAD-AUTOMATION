@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 pipeline {
   agent any
-  tools {nodejs "latest"}
+  //tools {nodejs "latest"}
   environment {
     LOCAL_JSON = ''
     extJSHelper = ''
