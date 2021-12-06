@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 pipeline {
   agent any
-  tools {nodejs "latest"}
+  //tools {nodejs "latest"}
   environment {
     LOCAL_JSON = ''
     extJSHelper = ''
@@ -20,8 +20,8 @@ pipeline {
   stages {
     stage('test') {
       // checkout
-      echo "Checking out ${params.GRAD_BRANCH}"
       steps{
+          echo "Checking out ${params.GRAD_BRANCH}"
           checkout poll: false, 
           scm: [$class: 'GitSCM', 
           branches: [[name: "${params.GRAD_BRANCH}"]], 
