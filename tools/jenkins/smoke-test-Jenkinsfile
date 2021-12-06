@@ -15,7 +15,7 @@ pipeline {
               defaultValue: 'main',
               useRepository: '',
               branch: '',
-              branchFilter: ".*dev.*|.*main.*")      
+              branchFilter: ".*dev.*|.*main.*|.*release.*")      
   }
   stages {
     stage('test') {
