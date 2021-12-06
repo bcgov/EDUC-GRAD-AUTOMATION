@@ -1,14 +1,13 @@
 #!/usr/bin/env groovy
 pipeline {
   agent any
-  //tools {nodejs "latest"}
+  tools {nodejs "latest"}
   environment {
     LOCAL_JSON = ''
     extJSHelper = ''
     OWNER = 'bcgov'
   }
   parameters{
-    //string(defaultValue: 'SNAPSHOT', description: 'Version of civix publisher. Valid versions are like 1.5.9', name: 'buildVersion') 
     gitParameter( 
               name: 'GRAD_BRANCH',
               type: 'PT_BRANCH',
@@ -30,7 +29,6 @@ pipeline {
           submoduleCfg: [], 
           userRemoteConfigs: []
         ]
-        echo "Testing stage complete."
       }
     }
     /*stage('Initialize') {
