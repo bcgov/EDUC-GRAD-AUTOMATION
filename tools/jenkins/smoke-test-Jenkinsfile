@@ -13,7 +13,7 @@ pipeline {
               name: 'GRAD_BRANCH',
               type: 'PT_BRANCH',
               defaultValue: 'main',
-              useRepository: 'https://github.com/bcgov/EDUC-GRAD-ALGORITHM-API',
+              useRepository: '',
               branch: '',
               branchFilter: ".*")      
   }
