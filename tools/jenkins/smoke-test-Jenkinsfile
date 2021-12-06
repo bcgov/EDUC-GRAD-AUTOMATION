@@ -1,0 +1,56 @@
+#!/usr/bin/env groovy
+pipeline {
+  agent any
+  tools {nodejs "latest"}
+  environment {
+    LOCAL_JSON = ''
+    extJSHelper = ''
+    OWNER = 'bcgov'
+  }
+  parameters{
+    //string(defaultValue: 'SNAPSHOT', description: 'Version of civix publisher. Valid versions are like 1.5.9', name: 'buildVersion') 
+    gitParameter( 
+              name: 'GRAD_BRANCH',
+              type: 'PT_BRANCH',
+              defaultValue: 'main',
+              useRepository: 'https://github.com/bcgov/EDUC-GRAD-ALGORITHM-API',
+              branch: '',
+              branchFilter: ".*")      
+  }
+  stages {
+    stage('test') {
+      // checkout
+      echo "Checking out ${params.GRAD_BRANCH}"
+      steps{
+          checkout poll: false, 
+          scm: [$class: 'GitSCM', 
+          branches: [[name: "${params.GRAD_BRANCH}"]], 
+          doGenerateSubmoduleConfigurations: false, 
+          extensions: [[$class: 'CleanBeforeCheckout']], 
+          submoduleCfg: [], 
+          userRemoteConfigs: []
+        ]
+        echo "Testing stage complete."
+      }
+    }
+    /*stage('Initialize') {
+      steps {
+        dir('frontend') {
+          // get secret and set environment vars
+          script {
+            LOCAL_JSON = sh(script: 'oc -n 8878b4-tools -o json get secret test-cafe-config | sed -n \'s/.*"local.json": "\\(.*\\)"/\\1/p\' | base64 --decode', returnStdout: true).trim()
+            writeFile file: '/var/lib/jenkins/jobs/DEV/jobs/TestCafeWorkflows/jobs/TestSuites/jobs/daily-smoke-test/workspace/frontend/tests/e2e/config/index.js', text: LOCAL_JSON
+          }
+        }
+      }
+    }
+    stage('get and delete pen request one') {
+      steps {
+        dir('frontend') {
+          sh 'npm install'
+          sh 'npm run getAndDeletePenRequestData'
+        }
+      }
+    }*/                   
+  }
+}
