@@ -1,7 +1,7 @@
 import loginPage from '../page_objects/loginPage';
 import studentSearchPage from '../page_objects/studentSearchPage';
 import studentProfilePage from '../page_objects/studentProfilePage';
-import { base_url, keycloakAdminCredentials, test_pen } from '../config/constants';
+import { base_url, credentials, test_pen } from '../config/constants';
 
 const log = require('npmlog');
 const login = new loginPage();
@@ -15,7 +15,7 @@ fixture `grad-login-admin`
     });
 
 test('Pen Search', async t => {
-    await login.staffLogin(keycloakAdminCredentials, base_url);
+    await login.staffLogin(credentials.adminCredentials, base_url);
     await searchPage.searchByPen(test_pen);
     await profilePage.selectCoursesTab();
     await profilePage.selectGRADTab();
