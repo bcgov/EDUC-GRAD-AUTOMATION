@@ -48,7 +48,7 @@ pipeline {
       steps {
         dir('frontend') {
           sh 'npm install'
-          sh 'npm run getAndDeletePenRequestData'
+          sh 'npm run smoke-test'
         }
       }
     }                   
