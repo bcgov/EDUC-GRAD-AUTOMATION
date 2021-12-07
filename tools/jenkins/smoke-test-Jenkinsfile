@@ -35,6 +35,7 @@ pipeline {
       steps {
         dir('frontend') {
           // get secret and set environment vars
+          echo 'running node --version'
           sh 'npm --version'
           /*script {
             LOCAL_JSON = sh(script: 'oc -n 8878b4-tools -o json get secret test-cafe-config | sed -n \'s/.*"local.json": "\\(.*\\)"/\\1/p\' | base64 --decode', returnStdout: true).trim()
