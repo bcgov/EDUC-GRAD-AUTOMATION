@@ -1,6 +1,6 @@
 {
     "_comment": "browsers should accept: edge -private, firefox -private-window, chrome -incognito",
-    "browsers": ["chrome -incognito"],
+    "browsers": ["chrome -incognito --headless"],
     "reporter": "list",
     "screenshots": {
         "path": "tests/screenshots/",

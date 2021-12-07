@@ -3,7 +3,7 @@ pipeline {
   agent any
   tools {nodejs "Node_12.22.1"}
   environment {
-    LOCAL_JSON = ''
+    ENV = ''
     extJSHelper = ''
     OWNER = 'bcgov'
   }
@@ -17,7 +17,7 @@ pipeline {
               branchFilter: ".*dev.*|.*main.*|.*release.*")      
   }
   stages {
-    stage('test') {
+    stage('branch checkout') {
       // checkout
       steps{
           echo "Checking out ${params.GRAD_BRANCH}"
@@ -35,22 +35,22 @@ pipeline {
       steps {
         dir('frontend') {
           // get secret and set environment vars
-          echo 'running node --version'
           sh 'npm --version'
-          /*script {
-            LOCAL_JSON = sh(script: 'oc -n 8878b4-tools -o json get secret test-cafe-config | sed -n \'s/.*"local.json": "\\(.*\\)"/\\1/p\' | base64 --decode', returnStdout: true).trim()
-            writeFile file: '/var/lib/jenkins/jobs/DEV/jobs/TestCafeWorkflows/jobs/TestSuites/jobs/daily-smoke-test/workspace/frontend/tests/e2e/config/index.js', text: LOCAL_JSON
-          }*/
+          script {
+            //ENV = sh(script: 'oc -n 8878b4-tools -o json get secret test-cafe-config | sed -n \'s/.*"local.json": "\\(.*\\)"/\\1/p\' | base64 --decode', returnStdout: true).trim()
+            ENV = sh(script: 'oc -n 77c02f-tools -o json get secret test-cafe-secret | sed -n \'s/.*"ENV": "\\(.*\\)"/\\1/p\' | base64 --decode', returnStdout: true).trim()
+            writeFile file: '/var/lib/jenkins/jobs/DevOps/jobs/smoke-test/workspace/frontend/.env', text: ENV
+          }
         }
       }
     }
-    /*stage('get and delete pen request one') {
+    stage('smoke test') {
       steps {
         dir('frontend') {
           sh 'npm install'
           sh 'npm run getAndDeletePenRequestData'
         }
       }
-    }*/                   
+    }                   
   }
 }
