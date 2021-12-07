@@ -39,6 +39,7 @@ pipeline {
           script {
             //ENV = sh(script: 'oc -n 8878b4-tools -o json get secret test-cafe-config | sed -n \'s/.*"local.json": "\\(.*\\)"/\\1/p\' | base64 --decode', returnStdout: true).trim()
             ENV = sh(script: 'oc -n 77c02f-tools -o json get secret test-cafe-secret | sed -n \'s/.*"ENV": "\\(.*\\)"/\\1/p\' | base64 --decode', returnStdout: true).trim()
+            echo "ENV = ${ENV}"
             writeFile file: '/var/lib/jenkins/jobs/DevOps/jobs/smoke-test/workspace/frontend/.env', text: ENV
           }
         }
