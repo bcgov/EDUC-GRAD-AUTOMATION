@@ -1,5 +1,4 @@
 import { Selector, t } from 'testcafe';
-import { ClientFunction } from 'testcafe';
 const log = require('npmlog');
 
 class StudentSearchPage {
@@ -13,25 +12,6 @@ class StudentSearchPage {
         //TODO: add adv search selectors
         
     }
-
-    async searchByPen(pen) {
-        const getLocation = ClientFunction(() => document.location.href);
-        // select PEN search tab
-        await t.click(this.searchTab);
-        await t
-            .typeText(this.searchInput, pen)
-            .click(this.searchSubmit)
-            .expect(getLocation()).contains('/student-profile');
-    }
-
-    async searchByPenNotFound(pen) {
-        await t.click(this.searchTab);
-        await t
-            .typeText(this.searchInput, "234534534")
-            .click(this.searchSubmit)
-            .expect(Selector('#search-results-message').innerText).contains('Student cannot be found', 'The student was not found', {timeout: 2000});
-    }
-
 };
 
 export default StudentSearchPage;
