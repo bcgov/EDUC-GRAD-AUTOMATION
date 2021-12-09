@@ -11,7 +11,7 @@ createTestCafe('localhost', 1337, 1338)
         return runner
             // list multiple test files
             .src(["tests/test_cases/studentSearch.js"])
-            .browsers(["firefox:headless", "chromium:headless"])
+            .browsers(["chromium:headless"])
             .run();
     })
     .then(failedCount => {
