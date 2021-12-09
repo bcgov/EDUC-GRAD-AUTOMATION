@@ -2,7 +2,7 @@ import { Selector, t } from 'testcafe';
 
 const log = require('npmlog');
 
-class loginPage {
+class LoginPage {
 
     constructor() {
         this.username = Selector('#username')
@@ -25,4 +25,4 @@ class loginPage {
     };
 
 };
-export default loginPage;
+export default LoginPage;

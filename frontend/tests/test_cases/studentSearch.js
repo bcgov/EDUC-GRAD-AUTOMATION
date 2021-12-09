@@ -1,13 +1,13 @@
-import loginPage from '../page_objects/loginPage';
+import LoginPage from '../page_objects/LoginPage';
 import StudentSearchPage from '../page_objects/StudentSearchPage';
-import studentProfilePage from '../page_objects/studentProfilePage';
+import StudentProfilePage from '../page_objects/StudentProfilePage';
 import { base_url, credentials, test_pen } from '../config/constants';
 import { ClientFunction } from 'testcafe';
 
 const log = require('npmlog');
-const login = new loginPage();
+const login = new LoginPage();
 const searchPage = new StudentSearchPage();
-const profilePage = new studentProfilePage();
+const profilePage = new StudentProfilePage();
 
 fixture `grad-login-admin`
     .page(base_url)
@@ -26,6 +26,7 @@ test('Pen Search', async t => {
         .expect(searchPage.searchMessage.innerText).contains('Student cannot be found', 'The student was not found', {timeout: 2000});
     // clear text from input
     await t.click(searchPage.searchInput).pressKey('ctrl+a delete');
+    
     // testing good pen search
     await t.click(searchPage.searchTab);
     await t

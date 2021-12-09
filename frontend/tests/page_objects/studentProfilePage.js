@@ -1,7 +1,7 @@
 import { Selector, t } from 'testcafe';
 const log = require('npmlog');
 
-class studentProfilePage {
+class StudentProfilePage {
 
     constructor() {
         // tabs
@@ -44,4 +44,4 @@ class studentProfilePage {
 
 };
 
-export default studentProfilePage;
+export default StudentProfilePage;
