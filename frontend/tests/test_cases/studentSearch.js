@@ -9,12 +9,14 @@ const searchPage = new studentSearchPage();
 const profilePage = new studentProfilePage();
 
 fixture `grad-login-admin`
-    .page(base_url);
-    //.beforeEach(async t => {
-        //await t.maximizeWindow();
-    //});
+    .page(base_url)
+    .beforeEach(async t => {
+        log.info("Before each...");
+        await t.maximizeWindow();
+    });
 
 test('Pen Search', async t => {
+    log.info("starting test");
     await login.staffLogin(credentials.adminCredentials, base_url);
     await searchPage.searchByPen(test_pen);
     await profilePage.selectCoursesTab();
