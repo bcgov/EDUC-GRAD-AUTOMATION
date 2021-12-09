@@ -23,6 +23,28 @@ class StudentSearchPage {
         this.usualMiddleInput = Selector('#usual-middle-input');
         this.localIdInput = Selector('#local-id-input');
     }
+
+    // select basic search tab
+    async selectPenSearchTab(){
+        await t.click(this.searchTab);
+    }
+
+    // select the Advanced search tab
+    async selectAdvancedSearchTab(){
+        await t.click(this.advSearchTab);
+    }
+
+    // clear the basic search input
+    async clearSearchInput(){
+        await t.click(this.searchInput).pressKey('ctrl+a delete');
+    }
+
+    // PEN search (basic)
+    async studentSearch(pen){
+        await t
+        .typeText(this.searchInput, pen)
+        .click(this.searchSubmit);
+    }
 };
 
 export default StudentSearchPage;
