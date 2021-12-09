@@ -15,6 +15,7 @@ createTestCafe('localhost', 1337, 1338)
                 "tests/test_cases/studentSearch.js"
 
             ])
+            .browsers('firefox:headless')
             .run();
     })
     .then(failedCount => {
