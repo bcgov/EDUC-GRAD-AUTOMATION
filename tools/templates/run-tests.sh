@@ -1,5 +1,4 @@
-#!/bin/sh
-
+#!/bin/bash
 git clone $GIT_REPO
 cd EDUC-GRAD-TEST-AUTOMATION/frontend
 npm install
