@@ -19,20 +19,26 @@ fixture `grad-login-admin`
 test('Pen Search', async t => {
     const getLocation = ClientFunction(() => document.location.href);
     // testing bad pen search
+    log.info("Testing student does not exist");
     await t.click(searchPage.searchTab);
     await t
         .typeText(searchPage.searchInput, "234534534")
         .click(searchPage.searchSubmit)
-        .expect(searchPage.searchMessage.innerText).contains('Student cannot be found', 'The student was not found', {timeout: 2000});
+        .expect(searchPage.searchMessage.innerText).contains('Student cannot be found', 'Student cannot be found error message did not occur', {timeout: 2000});
     // clear text from input
     await t.click(searchPage.searchInput).pressKey('ctrl+a delete');
     
     // testing good pen search
+    log.info("Testing search for existing student");
     await t.click(searchPage.searchTab);
     await t
         .typeText(searchPage.searchInput, test_pen)
         .click(searchPage.searchSubmit)
         .expect(getLocation()).contains('/student-profile');
-    //await searchPage.searchByPen(test_pen);
+    
+    // testing advanced search
+    log.info("Testing advanced search");
+    await t.click(searchPage.advSearchTab);
+    
 });
 
