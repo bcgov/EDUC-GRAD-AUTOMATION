@@ -7,11 +7,10 @@ createTestCafe('localhost', 1337, 1338)
     .then(tc => {
         testcafe = tc;
         const runner = testcafe.createRunner();
-        log.info("returning test runner");
         return runner
             // list multiple test files
             .src(["tests/test_cases/studentSearch.js"])
-            .browsers(["chromium:headless"])
+            //.browsers(["chrome:headless", "firefox:headless"])
             .run();
     })
     .then(failedCount => {
