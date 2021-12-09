@@ -9,10 +9,10 @@ const searchPage = new studentSearchPage();
 const profilePage = new studentProfilePage();
 
 fixture `grad-login-admin`
-    .page(base_url)
-    .beforeEach(async t => {
-        await t.maximizeWindow();
-    });
+    .page(base_url);
+    //.beforeEach(async t => {
+        //await t.maximizeWindow();
+    //});
 
 test('Pen Search', async t => {
     await login.staffLogin(credentials.adminCredentials, base_url);
