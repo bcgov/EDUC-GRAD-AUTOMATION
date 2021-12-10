@@ -1,23 +1,24 @@
 import LoginPage from '../page_objects/LoginPage';
 import StudentSearchPage from '../page_objects/StudentSearchPage';
 import MainMenu from '../page_objects/MainMenu';
-import StudentProfilePage from '../page_objects/StudentProfilePage';
-import { base_url, credentials, test_pen } from '../config/constants';
-import { ClientFunction, t } from 'testcafe';
+import { base_url, credentials, test_pen, api_html_status_threshold } from '../config/constants';
+import { ClientFunction, RequestLogger  } from 'testcafe';
+import { apiCallsFailed } from '../helpers/requestHelper';
 
 const log = require('npmlog');
 const bad_pen = '121212121';
 const login = new LoginPage();
 const searchPage = new StudentSearchPage();
 const mainMenu = new MainMenu();
-const profilePage = new StudentProfilePage();
+const requestLogger = RequestLogger(/api\/v1/, {logResponseBody: true, logResponseHeaders: true});
 
 fixture `grad-login-admin`
     .page(base_url)
+    .requestHooks(requestLogger)
     .beforeEach(async t => {
         await login.staffLogin(credentials.adminCredentials, base_url);
         await t.maximizeWindow();
-    });
+    }).afterEach(() => log.info(apiCallsFailed(requestLogger, api_html_status_threshold)));
 
 test('Pen Search', async t => {
     const getLocation = ClientFunction(() => document.location.href);
@@ -31,7 +32,11 @@ test('Pen Search', async t => {
     
     // testing good pen search
     log.info("Testing search for existing student");
-    await searchPage.studentSearch(test_pen);
+    await t.typeText(searchPage.searchInput, test_pen)
+           .click(searchPage.searchSubmit)
+           .wait(1000)
+           .expect(requestLogger.contains(r => r.response.statusCode > api_html_status_threshold)).notOk();
+           
     await t.expect(getLocation()).contains('/student-profile');
 
     // testing pen bad pen search from top menu

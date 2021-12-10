@@ -21,7 +21,8 @@ nconf.defaults({
         pass: process.env.TEST_ADMIN_PASSWORD
     },
     test: {
-        pen: process.env.TEST_PEN
+        pen: process.env.TEST_PEN,
+        api_html_status_threshold: process.env.API_HTML_STATUS_CLASS_THRESHOLD
     }
 });
 
