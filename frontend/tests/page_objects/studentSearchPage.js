@@ -1,5 +1,4 @@
 import { Selector, t } from 'testcafe';
-const log = require('npmlog');
 
 class StudentSearchPage {
 
