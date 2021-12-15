@@ -1,0 +1,15 @@
+spring:
+  main:
+    web-application-type: none
+    banner-mode: off
+logging:
+  level:
+    root: off
+gtts-properties:
+  grad-api-base-url: http://local.civix.cs/api/v2
+  service-endpoints:
+    index: ${collection-builder-properties.civix-server-api-base-url}/index/{indexId}
+    index-alias: ${collection-builder-properties.civix-server-api-base-url}/index/{indexId}/alias/{alias}
+    post-put-doc: ${collection-builder-properties.civix-server-api-base-url}/index/{indexId}/doc
+    get-delete-doc: ${collection-builder-properties.civix-server-api-base-url}/index/{indexId}/doc/{docId}
+    query-string-search: ${collection-builder-properties.civix-server-api-base-url}/search
