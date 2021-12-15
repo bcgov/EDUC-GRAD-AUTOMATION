@@ -41,9 +41,12 @@ test('Pen Search', async t => {
 
     // testing pen bad pen search from top menu
     // TODO: awaiting resolution for bugfix https://gww.jira.educ.gov.bc.ca/browse/GRAD2-874
-    //log.info("Testing bad pen search from top menu");
-    //await mainMenu.selectSearchByPenInput(bad_pen);
-    //await t.expect(searchPage.searchMessage.innerText).contains('Student cannot be found', 'Student cannot be found error message did not occur', {timeout: 2000});
+    log.info("Testing bad pen search from top menu");
+    await t.typeText(mainMenu.searchByPenInput, bad_pen)
+           .click(mainMenu.searchByPenButton)
+           .expect(requestLogger.contains(r => r.response.statusCode > api_html_status_threshold)).notOk();
+    
+    await t.expect(searchPage.searchMessage.innerText).contains('Student cannot be found', 'Student cannot be found error message did not occur', {timeout: 2000});
 
     // testing good pen search from main menu
     log.info("Testing good pen search from top menu");
