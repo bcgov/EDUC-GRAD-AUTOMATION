@@ -9,6 +9,11 @@ import java.net.URL;
 public class JSONUtilities {
 
     /**
+     * private constructor
+     */
+    private JSONUtilities(){}
+
+    /**
      * Pretty prints valid json. This method follow the GIGO principal (Garbage In, Garbage Out)
      * If you attempt to pas crappy, mal-formed json to this method, it will not produce an error
      * but will just return your garbage ;)

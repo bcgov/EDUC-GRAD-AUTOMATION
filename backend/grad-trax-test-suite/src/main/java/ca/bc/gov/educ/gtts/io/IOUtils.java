@@ -14,6 +14,11 @@ import java.time.format.DateTimeFormatter;
 
 public class IOUtils {
 
+    /**
+     * Thwart instantiation
+     */
+    private IOUtils(){}
+
     public static void logOutputStreamToFile(String location, String fileName) throws IOUtilsException {
         if(!location.endsWith("\\")){
             location = location + "\\";
@@ -23,8 +28,10 @@ public class IOUtils {
             Path path = Paths.get(location);
             File outputFile = path.toFile();
             outputFile.createNewFile();
-            FileOutputStream fos = new FileOutputStream(outputFile);
-            TeeOutputStream splitStream = new TeeOutputStream(System.out, fos);
+            TeeOutputStream splitStream;
+            try (FileOutputStream fos = new FileOutputStream(outputFile)) {
+                splitStream = new TeeOutputStream(System.out, fos);
+            }
             PrintStream ps = new PrintStream(splitStream);
             System.setOut(ps);
             System.setErr(ps);

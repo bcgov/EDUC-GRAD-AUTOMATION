@@ -21,7 +21,6 @@ public class Config {
      * @throws IOUtilsException
      */
     public static void setUpLogging(String logFileLocation) throws IOUtilsException {
-        //String logFileLocation = buildConfig.getEnvironmentString("logFileLocation");
         if(logFileLocation != null){
             IOUtils.logOutputStreamToFile(logFileLocation, "test");
         }

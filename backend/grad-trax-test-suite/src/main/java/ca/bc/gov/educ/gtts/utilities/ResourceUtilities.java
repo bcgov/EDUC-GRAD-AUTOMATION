@@ -16,6 +16,8 @@ import java.util.Date;
  */
 public class ResourceUtilities {
 
+    private ResourceUtilities(){}
+
     /**
      * Attempts to get a resource as a String. This method is useful
      * for example for getting text based files that are on the classpath
