@@ -6,10 +6,16 @@ logging:
   level:
     root: off
 gtts-properties:
-  grad-api-base-url: http://local.civix.cs/api/v2
+  grad-api-base-url: https://dev.grad.gov.bc.ca/
+  os-hosted-url: ${OS_HOSTED_URL}
   service-endpoints:
-    index: ${collection-builder-properties.civix-server-api-base-url}/index/{indexId}
-    index-alias: ${collection-builder-properties.civix-server-api-base-url}/index/{indexId}/alias/{alias}
-    post-put-doc: ${collection-builder-properties.civix-server-api-base-url}/index/{indexId}/doc
-    get-delete-doc: ${collection-builder-properties.civix-server-api-base-url}/index/{indexId}/doc/{docId}
-    query-string-search: ${collection-builder-properties.civix-server-api-base-url}/search
+    keycloak-auth-host: ${KEYCLOAK_AUTH_HOST}
+    trax-api: https://educ-grad-trax-api-${gtts-properties.os-hosted-url}
+    batch-graduation-api: https://educ-grad-batch-graduation-api-${gtts-properties.os-hosted-url}
+    student-graduation-api: https://educ-grad-student-graduation-api-${gtts-properties.os-hosted-url}
+    graduation-api: https://educ-grad-graduation-api-${gtts-properties.os-hosted-url}
+    assessment-api: https://educ-grad-assessment-api-${gtts-properties.os-hosted-url}
+    students-api: https://educ-grad-student-api-${gtts-properties.os-hosted-url}
+    graduation-report-api: https://educ-grad-graduation-report-api-${gtts-properties.os-hosted-url}
+    grad-report-api: https://educ-grad-report-api-${gtts-properties.os-hosted-url}
+    program-api: https://educ-grad-program-api-${gtts-properties.os-hosted-url}

@@ -28,7 +28,8 @@ public class TraxBatchServiceImpl implements TraxBatchService {
 
     @Override
     public boolean runTest() {
-        System.out.println(gttsProperties.getGradApiBaseUrl());
+        System.out.println(gttsProperties.getOsHostedUrl());
+        System.out.println(gttsProperties.getEndPoint("keycloak-auth-host"));
         return true;
     }
 

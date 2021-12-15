@@ -11,6 +11,7 @@ import java.util.Map;
 public class GttsProperties {
 
     private String gradApiBaseUrl;
+    private String osHostedUrl;
     private Map<String, String> serviceEndpoints;
 
     public GttsProperties() {}
@@ -26,6 +27,14 @@ public class GttsProperties {
 
     public void setGradApiBaseUrl(String gradApiBaseUrl) {
         this.gradApiBaseUrl = gradApiBaseUrl;
+    }
+
+    public String getOsHostedUrl() {
+        return osHostedUrl;
+    }
+
+    public void setOsHostedUrl(String osHostedUrl) {
+        this.osHostedUrl = osHostedUrl;
     }
 
     public Map<String, String> getServiceEndpoints() {

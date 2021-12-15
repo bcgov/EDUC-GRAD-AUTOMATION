@@ -16,10 +16,11 @@ class GttsApplicationTests {
 	@Autowired
 	ApplicationContext ctx;
 
-	@Test
+	/*@Test
 	void testIntegrationTraxBatch() throws Exception {
 		CommandLineRunner runner = ctx.getBean(CommandLineRunner.class);
 		runner.run ( "integration", "traxbatch");
-	}
+		// TODO: add assertion
+	}*/
 
 }
