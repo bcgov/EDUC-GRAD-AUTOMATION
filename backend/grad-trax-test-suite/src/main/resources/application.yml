@@ -8,6 +8,11 @@ logging:
 gtts-properties:
   grad-api-base-url: https://dev.grad.gov.bc.ca/
   os-hosted-url: ${OS_HOSTED_URL}
+  auth:
+    student-api-client-id: ${STUDENT_API_CLIENT_ID}
+    student-api-client-secret: ${STUDENT_API_CLIENT_SECRET}
+    student-api-username: ${STUDENT_API_USERNAME}
+    student-api-password: ${STUDENT_API_PASSWORD}
   service-endpoints:
     keycloak-auth-host: ${KEYCLOAK_AUTH_HOST}
     trax-api: https://educ-grad-trax-api-${gtts-properties.os-hosted-url}

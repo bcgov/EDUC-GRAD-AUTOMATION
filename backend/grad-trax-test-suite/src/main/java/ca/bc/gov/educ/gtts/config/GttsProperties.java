@@ -13,6 +13,7 @@ public class GttsProperties {
     private String gradApiBaseUrl;
     private String osHostedUrl;
     private Map<String, String> serviceEndpoints;
+    private Map<String, String> auth;
 
     public GttsProperties() {}
 
@@ -35,6 +36,18 @@ public class GttsProperties {
 
     public void setOsHostedUrl(String osHostedUrl) {
         this.osHostedUrl = osHostedUrl;
+    }
+
+    public Map<String, String> getAuth() {
+        return auth;
+    }
+
+    public void setAuth(Map<String, String> auth) {
+        this.auth = auth;
+    }
+
+    public String getAuthValue(String key) {
+        return (auth.containsKey(key)) ? auth.get(key) : null;
     }
 
     public Map<String, String> getServiceEndpoints() {
