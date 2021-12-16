@@ -2,9 +2,11 @@ package ca.bc.gov.educ.gtts.utilities;
 
 import ca.bc.gov.educ.gtts.exception.JSONUtilitiesException;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.net.URL;
+import java.util.List;
 
 public class JSONUtilities {
 
@@ -67,6 +69,18 @@ public class JSONUtilities {
         } catch (JsonProcessingException e) {
             throw new JSONUtilitiesException(e.getMessage());
         }
+    }
+
+    /**
+     * Convenience method for converting lists of objects to other types
+     * @param list
+     * @param typeReference
+     * @param <T>
+     * @return
+     */
+    public static <T> T serializeListOfJSONToObjectList(List<T> list, TypeReference<T> typeReference) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.convertValue(list, typeReference);
     }
 
     /**

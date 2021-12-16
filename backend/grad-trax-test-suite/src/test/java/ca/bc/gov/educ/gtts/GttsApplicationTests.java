@@ -16,6 +16,8 @@ class GttsApplicationTests {
 	@Autowired
 	ApplicationContext ctx;
 
+
+
 	/*@Test
 	void testIntegrationTraxBatch() throws Exception {
 		CommandLineRunner runner = ctx.getBean(CommandLineRunner.class);

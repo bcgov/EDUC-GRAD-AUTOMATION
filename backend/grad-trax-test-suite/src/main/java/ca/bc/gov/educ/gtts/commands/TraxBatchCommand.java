@@ -1,6 +1,6 @@
 package ca.bc.gov.educ.gtts.commands;
 
-import ca.bc.gov.educ.gtts.services.trax.TraxBatchService;
+import ca.bc.gov.educ.gtts.services.TraxBatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import picocli.CommandLine;

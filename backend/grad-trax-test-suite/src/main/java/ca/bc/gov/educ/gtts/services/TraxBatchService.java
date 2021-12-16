@@ -1,4 +1,4 @@
-package ca.bc.gov.educ.gtts.services.trax;
+package ca.bc.gov.educ.gtts.services;
 
 /**
  * Trax batch service
