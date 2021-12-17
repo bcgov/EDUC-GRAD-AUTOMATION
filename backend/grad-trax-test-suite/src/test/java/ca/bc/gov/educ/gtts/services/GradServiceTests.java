@@ -1,4 +1,4 @@
-package ca.bc.gov.educ.gtts;
+package ca.bc.gov.educ.gtts.services;
 
 import ca.bc.gov.educ.gtts.config.GttsProperties;
 import ca.bc.gov.educ.gtts.model.student.GradSearchStudent;
