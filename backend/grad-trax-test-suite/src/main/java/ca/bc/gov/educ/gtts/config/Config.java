@@ -2,6 +2,7 @@ package ca.bc.gov.educ.gtts.config;
 
 import ca.bc.gov.educ.gtts.exception.IOUtilsException;
 import ca.bc.gov.educ.gtts.io.IOUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -31,6 +32,9 @@ public class Config {
     }
 
     @Bean
+    public ModelMapper getModelMapper(){return new ModelMapper();}
+
+    @Bean
     public RestTemplate getWebClient(){
         return new RestTemplate();
     }
@@ -42,11 +46,11 @@ public class Config {
         resource = new ResourceOwnerPasswordResourceDetails();
 
         resource.setAccessTokenUri(gttsProperties.getEndPoint("keycloak-auth-host") + "/auth/realms/master/protocol/openid-connect/token");
-        resource.setClientId(gttsProperties.getAuthValue("student-api-client-id"));
-        resource.setClientSecret(gttsProperties.getAuthValue("student-api-client-secret"));
+        resource.setClientId(gttsProperties.getAuthValue("dto-api-client-id"));
+        resource.setClientSecret(gttsProperties.getAuthValue("dto-api-client-secret"));
         resource.setGrantType("password");
-        resource.setUsername(gttsProperties.getAuthValue("student-api-username"));
-        resource.setPassword(gttsProperties.getAuthValue("student-api-password"));
+        resource.setUsername(gttsProperties.getAuthValue("dto-api-username"));
+        resource.setPassword(gttsProperties.getAuthValue("dto-api-password"));
         return resource;
     }
 

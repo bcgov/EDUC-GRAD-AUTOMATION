@@ -2,7 +2,7 @@ package ca.bc.gov.educ.gtts.services;
 
 import ca.bc.gov.educ.gtts.exception.GenericHTTPRequestServiceException;
 import ca.bc.gov.educ.gtts.exception.NotFoundException;
-import ca.bc.gov.educ.gtts.model.student.GradSearchStudent;
+import ca.bc.gov.educ.gtts.model.dto.GradSearchStudent;
 
 /**
  * @author CDITCHER

@@ -2,7 +2,7 @@ package ca.bc.gov.educ.gtts.services;
 
 import ca.bc.gov.educ.gtts.exception.GenericHTTPRequestServiceException;
 import ca.bc.gov.educ.gtts.exception.NotFoundException;
-import ca.bc.gov.educ.gtts.model.student.GradSearchStudent;
+import ca.bc.gov.educ.gtts.model.dto.GradSearchStudent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 public class TraxBatchServiceImpl implements TraxBatchService {
 
     private GradService gradService;
-    private TraxDataService traxDataService;
+    private TraxService traxService;
 
     @Autowired
-    public TraxBatchServiceImpl(GradService gradService, TraxDataService traxDataService) {
+    public TraxBatchServiceImpl(GradService gradService, TraxService traxService) {
         this.gradService = gradService;
-        this.traxDataService = traxDataService;
+        this.traxService = traxService;
     }
 
     @Override

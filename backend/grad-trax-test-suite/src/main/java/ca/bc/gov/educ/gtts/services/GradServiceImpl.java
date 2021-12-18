@@ -3,7 +3,7 @@ package ca.bc.gov.educ.gtts.services;
 import ca.bc.gov.educ.gtts.config.GttsProperties;
 import ca.bc.gov.educ.gtts.exception.GenericHTTPRequestServiceException;
 import ca.bc.gov.educ.gtts.exception.NotFoundException;
-import ca.bc.gov.educ.gtts.model.student.GradSearchStudent;
+import ca.bc.gov.educ.gtts.model.dto.GradSearchStudent;
 import ca.bc.gov.educ.gtts.utilities.JSONUtilities;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.springframework.beans.factory.annotation.Autowired;

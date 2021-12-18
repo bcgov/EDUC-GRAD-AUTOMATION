@@ -1,9 +1,7 @@
 package ca.bc.gov.educ.gtts.services;
 
 import ca.bc.gov.educ.gtts.config.GttsProperties;
-import ca.bc.gov.educ.gtts.model.student.GradSearchStudent;
-import ca.bc.gov.educ.gtts.services.GenericHTTPRequestServiceImpl;
-import ca.bc.gov.educ.gtts.services.GradServiceImpl;
+import ca.bc.gov.educ.gtts.model.dto.GradSearchStudent;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,9 +1,4 @@
-package ca.bc.gov.educ.gtts.model.student;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
+package ca.bc.gov.educ.gtts.model.dto;
 
 public class GradSearchStudent {
 
