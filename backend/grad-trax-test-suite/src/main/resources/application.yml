@@ -30,11 +30,11 @@ gtts-properties:
     student-api-password: ${STUDENT_API_PASSWORD}
   service-endpoints:
     keycloak-auth-host: ${KEYCLOAK_AUTH_HOST}
-    students-api: https://educ-grad-dto-api-${gtts-properties.os-hosted-url}
-    students-api-search-by-pen: https://educ-grad-dto-api-${gtts-properties.os-hosted-url}/api/v1/dto/pen/{pen}
+    students-api: https://educ-grad-student-api-${gtts-properties.os-hosted-url}
+    students-api-search-by-pen: https://educ-grad-student-api-${gtts-properties.os-hosted-url}/api/v1/student/pen/{pen}
     #trax-api: https://educ-grad-trax-api-${gtts-properties.os-hosted-url}
     #batch-graduation-api: https://educ-grad-batch-graduation-api-${gtts-properties.os-hosted-url}
-    #dto-graduation-api: https://educ-grad-student-graduation-api-${gtts-properties.os-hosted-url}
+    #student-graduation-api: https://educ-grad-student-graduation-api-${gtts-properties.os-hosted-url}
     #graduation-api: https://educ-grad-graduation-api-${gtts-properties.os-hosted-url}
     #assessment-api: https://educ-grad-assessment-api-${gtts-properties.os-hosted-url}
     #graduation-report-api: https://educ-grad-graduation-report-api-${gtts-properties.os-hosted-url}

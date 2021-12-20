@@ -35,9 +35,7 @@ public class TraxBatchCommand implements Callable<Integer> {
     @Override
     public Integer call() throws Exception {
         // TODO: update methods
-        //traxBatchService.runTest();
-        TraxStudentDto traxStudentDto = traxService.findTraxStudentByPEN("135290237");
-        System.out.println(traxStudentDto.getAddress1());
+        traxBatchService.runTest();
         return 0;
     }
 

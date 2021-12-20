@@ -46,11 +46,11 @@ public class Config {
         resource = new ResourceOwnerPasswordResourceDetails();
 
         resource.setAccessTokenUri(gttsProperties.getEndPoint("keycloak-auth-host") + "/auth/realms/master/protocol/openid-connect/token");
-        resource.setClientId(gttsProperties.getAuthValue("dto-api-client-id"));
-        resource.setClientSecret(gttsProperties.getAuthValue("dto-api-client-secret"));
+        resource.setClientId(gttsProperties.getAuthValue("student-api-client-id"));
+        resource.setClientSecret(gttsProperties.getAuthValue("student-api-client-secret"));
         resource.setGrantType("password");
-        resource.setUsername(gttsProperties.getAuthValue("dto-api-username"));
-        resource.setPassword(gttsProperties.getAuthValue("dto-api-password"));
+        resource.setUsername(gttsProperties.getAuthValue("student-api-username"));
+        resource.setPassword(gttsProperties.getAuthValue("student-api-password"));
         return resource;
     }
 
