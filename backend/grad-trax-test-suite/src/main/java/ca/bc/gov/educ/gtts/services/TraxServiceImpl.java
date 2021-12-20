@@ -3,9 +3,11 @@ package ca.bc.gov.educ.gtts.services;
 import ca.bc.gov.educ.gtts.exception.NotFoundException;
 import ca.bc.gov.educ.gtts.model.dto.TraxStudentDto;
 import ca.bc.gov.educ.gtts.model.entity.TraxStudentEntity;
+import ca.bc.gov.educ.gtts.model.entity.TswTranDemogEntity;
 import ca.bc.gov.educ.gtts.model.entity.TswTranNonGradEntity;
 import ca.bc.gov.educ.gtts.model.transformer.TraxStudentTransformer;
 import ca.bc.gov.educ.gtts.repository.TraxStudentRepository;
+import ca.bc.gov.educ.gtts.repository.TraxTswTranDemogRepository;
 import ca.bc.gov.educ.gtts.repository.TswTranNonGradRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,13 +22,19 @@ public class TraxServiceImpl implements TraxService {
 
     private TraxStudentRepository repository;
     private TswTranNonGradRepository tswTranNonGradRepository;
+    private TraxTswTranDemogRepository traxTswTranDemogRepository;
     private TraxStudentTransformer transformer;
 
     @Autowired
-    public TraxServiceImpl(TraxStudentRepository repository, TraxStudentTransformer transformer, TswTranNonGradRepository tswTranNonGradRepository) {
+    public TraxServiceImpl(
+            TraxStudentRepository repository,
+            TraxStudentTransformer transformer,
+            TswTranNonGradRepository tswTranNonGradRepository,
+            TraxTswTranDemogRepository traxTswTranDemogRepository) {
         this.repository = repository;
         this.transformer = transformer;
         this.tswTranNonGradRepository = tswTranNonGradRepository;
+        this.traxTswTranDemogRepository = traxTswTranDemogRepository;
     }
 
     /**
@@ -51,6 +59,15 @@ public class TraxServiceImpl implements TraxService {
      */
     private Iterable<TswTranNonGradEntity> getNonGradReasons(String pen){
         return tswTranNonGradRepository.findByPen(pen);
+    }
+
+    /**
+     * Returns student data from the TRAX TSW_TRAN_DEMOG schema
+     * @param pen a valid pen
+     * @return TswTranDemogEntity
+     */
+    private TswTranDemogEntity getTransDemogEntity(String pen){
+        return traxTswTranDemogRepository.findById(pen).orElse(null);
     }
 
 }

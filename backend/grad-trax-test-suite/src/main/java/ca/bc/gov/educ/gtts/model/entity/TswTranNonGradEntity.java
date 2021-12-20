@@ -6,14 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@IdClass(TswTranNonGradId.class)
+@IdClass(TswTranNonGradCompositeId.class)
 @Table(name = "TSW_TRAN_NONGRAD")
 public class TswTranNonGradEntity {
 

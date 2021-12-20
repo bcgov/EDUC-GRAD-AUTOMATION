@@ -21,6 +21,7 @@ public class TraxBatchServiceImpl implements TraxBatchService {
     @Override
     public boolean runTest() {
         try {
+            traxService.findTraxStudentByPEN("107223315");
             GradSearchStudent gradSearchStudent = gradService.getStudentByPen("107223315");
             System.out.println("Pen is: " + gradSearchStudent.getPen());
         } catch (GenericHTTPRequestServiceException e) {
