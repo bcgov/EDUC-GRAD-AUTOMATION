@@ -1,6 +1,8 @@
 package ca.bc.gov.educ.gtts.commands;
 
+import ca.bc.gov.educ.gtts.model.dto.TraxStudentDto;
 import ca.bc.gov.educ.gtts.services.TraxBatchService;
+import ca.bc.gov.educ.gtts.services.TraxService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import picocli.CommandLine;
@@ -16,6 +18,7 @@ import java.util.concurrent.Callable;
 public class TraxBatchCommand implements Callable<Integer> {
 
     private TraxBatchService traxBatchService;
+    private TraxService traxService;
 
     /*@CommandLine.Option(
             names = {"-id", "--index-id"},
@@ -24,14 +27,17 @@ public class TraxBatchCommand implements Callable<Integer> {
     String indexId;*/
 
     @Autowired
-    public TraxBatchCommand(TraxBatchService traxBatchService) {
+    public TraxBatchCommand(TraxBatchService traxBatchService, TraxService traxService) {
         this.traxBatchService = traxBatchService;
+        this.traxService = traxService;
     }
 
     @Override
     public Integer call() throws Exception {
         // TODO: update methods
-        traxBatchService.runTest();
+        //traxBatchService.runTest();
+        TraxStudentDto traxStudentDto = traxService.findTraxStudentByPEN("135290237");
+        System.out.println(traxStudentDto.getAddress1());
         return 0;
     }
 
