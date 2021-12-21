@@ -25,3 +25,4 @@ data.*
 D00.json
 # local environment vars
 .env
+backend/grad-trax-test-suite/src/test/resources/pens-to-test.json

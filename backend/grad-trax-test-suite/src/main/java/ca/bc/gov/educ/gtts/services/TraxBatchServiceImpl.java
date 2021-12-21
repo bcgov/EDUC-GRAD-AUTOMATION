@@ -3,8 +3,11 @@ package ca.bc.gov.educ.gtts.services;
 import ca.bc.gov.educ.gtts.exception.GenericHTTPRequestServiceException;
 import ca.bc.gov.educ.gtts.exception.NotFoundException;
 import ca.bc.gov.educ.gtts.model.dto.GradSearchStudent;
+import ca.bc.gov.educ.gtts.model.dto.TraxStudentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TraxBatchServiceImpl implements TraxBatchService {
@@ -19,11 +22,14 @@ public class TraxBatchServiceImpl implements TraxBatchService {
     }
 
     @Override
-    public boolean runTest() {
+    public boolean runTest(List<String> pens) {
         try {
-            traxService.findTraxStudentByPEN("107223315");
-            GradSearchStudent gradSearchStudent = gradService.getStudentByPen("107223315");
-            System.out.println("Pen is: " + gradSearchStudent.getPen());
+            for (String pen : pens) {
+                TraxStudentDto traxStudentDto = traxService.findTraxStudentByPEN(pen);
+                GradSearchStudent gradSearchStudent = gradService.getStudentByPen(pen);
+                System.out.println("TSDTO Pen is: " + gradSearchStudent.getPen() + " GSS Pen is: " + traxStudentDto.getStudNo());
+            }
+
         } catch (GenericHTTPRequestServiceException e) {
             e.printStackTrace();
         } catch (NotFoundException e) {

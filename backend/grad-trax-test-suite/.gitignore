@@ -30,3 +30,4 @@ build/
 ### VS Code ###
 .vscode/
 .env
+**/pens-to-test.json
