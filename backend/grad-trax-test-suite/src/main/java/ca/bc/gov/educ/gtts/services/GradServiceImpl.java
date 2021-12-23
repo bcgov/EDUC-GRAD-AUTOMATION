@@ -4,6 +4,8 @@ import ca.bc.gov.educ.gtts.config.GttsProperties;
 import ca.bc.gov.educ.gtts.exception.GenericHTTPRequestServiceException;
 import ca.bc.gov.educ.gtts.exception.NotFoundException;
 import ca.bc.gov.educ.gtts.model.dto.GradSearchStudent;
+import ca.bc.gov.educ.gtts.model.dto.grad.algorithm.ExceptionMessage;
+import ca.bc.gov.educ.gtts.model.dto.grad.algorithm.GraduationData;
 import ca.bc.gov.educ.gtts.utilities.JSONUtilities;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class GradServiceImpl implements GradService {
@@ -35,6 +38,22 @@ public class GradServiceImpl implements GradService {
         }
         return gradSearchStudent.get(0);
     }
+
+    // below are for returning data from grad algorithm
+    // TODO: update using internal webClient
+    /**public GraduationData runGradAlgorithm(UUID studentID, String program, String accessToken, ExceptionMessage exception) {
+        try {
+            return webClient.get().uri(String.format(educGraduationApiConstants.getGradAlgorithmEndpoint(),studentID,program)).headers(h -> h.setBearerAuth(accessToken)).retrieve().bodyToMono(GraduationData.class).block();
+        }catch(Exception e) {
+            exception.setExceptionName("GRAD-ALGORITHM-API IS DOWN");
+            exception.setExceptionDetails(e.getLocalizedMessage());
+            return null;
+        }
+    }
+
+    public GraduationData runProjectedAlgorithm(UUID studentID, String program,String accessToken) {
+        return webClient.get().uri(String.format(educGraduationApiConstants.getGradProjectedAlgorithmEndpoint(), studentID,program, true)).headers(h -> h.setBearerAuth(accessToken)).retrieve().bodyToMono(GraduationData.class).block();
+    }**/
 
 
 }

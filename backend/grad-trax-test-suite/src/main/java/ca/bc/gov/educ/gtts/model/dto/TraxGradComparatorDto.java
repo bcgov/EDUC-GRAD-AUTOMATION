@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,9 +25,9 @@ public class TraxGradComparatorDto {
     private String gradReqtYear;
     private String gradDate;
     private String gradFlag;
-    private String updateDate;
+    private Integer updateDate;
 
     // From TSW_TRAN_NONGRAD
-    List<TraxGradComparatorNonGradDto> traxGradComparatorNonGradDtoList;
+    List<TraxGradComparatorNonGradDto> traxGradComparatorNonGradDtoList = new ArrayList<>();
 
 }

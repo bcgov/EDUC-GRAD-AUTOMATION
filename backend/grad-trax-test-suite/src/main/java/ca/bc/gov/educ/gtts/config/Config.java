@@ -2,6 +2,7 @@ package ca.bc.gov.educ.gtts.config;
 
 import ca.bc.gov.educ.gtts.exception.IOUtilsException;
 import ca.bc.gov.educ.gtts.io.IOUtils;
+import ca.bc.gov.educ.gtts.model.dto.TraxGradComparatorDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
