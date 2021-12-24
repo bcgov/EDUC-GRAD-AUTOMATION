@@ -13,7 +13,7 @@ spring:
     password: ${TRAX_DB_PASSWORD}
     driver-class: oracle.jdbc.driver.OracleDriver
   jpa:
-    show-sql: true
+    show-sql: false
     database-platform: org.hibernate.dialect.Oracle12cDialect
     hibernate:
       ddl-auto: none
@@ -32,6 +32,8 @@ gtts-properties:
     keycloak-auth-host: ${KEYCLOAK_AUTH_HOST}
     students-api: https://educ-grad-student-api-${gtts-properties.os-hosted-url}
     students-api-search-by-pen: https://educ-grad-student-api-${gtts-properties.os-hosted-url}/api/v1/student/pen/{pen}
+    grad-algorithm-api-graduate: https://educ-grad-algorithm-api-77c02f-dev.apps.silver.devops.gov.bc.ca/api/v1/graduatestudent?studentID={studentId}&gradProgram={gradProgram}
+    grad-algorithm-api-projected: https://educ-grad-algorithm-api-77c02f-dev.apps.silver.devops.gov.bc.ca/api/v1/graduatestudent?studentID={studentId}&gradProgram={gradProgram}&projected={isProjected}
     #trax-api: https://educ-grad-trax-api-${gtts-properties.os-hosted-url}
     #batch-graduation-api: https://educ-grad-batch-graduation-api-${gtts-properties.os-hosted-url}
     #student-graduation-api: https://educ-grad-student-graduation-api-${gtts-properties.os-hosted-url}

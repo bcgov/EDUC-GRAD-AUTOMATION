@@ -2,6 +2,7 @@ package ca.bc.gov.educ.gtts.model.transformer;
 
 import ca.bc.gov.educ.gtts.model.dto.TraxGradComparatorDto;
 import ca.bc.gov.educ.gtts.model.dto.TraxGradComparatorNonGradDto;
+import ca.bc.gov.educ.gtts.model.dto.grad.algorithm.GraduationData;
 import ca.bc.gov.educ.gtts.model.entity.TswTranDemogEntity;
 import ca.bc.gov.educ.gtts.model.entity.TswTranNonGradEntity;
 import org.springframework.stereotype.Component;
@@ -36,8 +37,9 @@ public class TraxGradComparisonTransformer {
         return traxGradComparatorDto;
     }
 
-    public TraxGradComparatorDto getTraxGradComparatorDto(){
+    public TraxGradComparatorDto getTraxGradComparatorDto(GraduationData graduationData){
         TraxGradComparatorDto traxGradComparatorDto = new TraxGradComparatorDto();
+        //traxGradComparatorDto.setGradDate();
         //TODO: finish this
         return traxGradComparatorDto;
     }

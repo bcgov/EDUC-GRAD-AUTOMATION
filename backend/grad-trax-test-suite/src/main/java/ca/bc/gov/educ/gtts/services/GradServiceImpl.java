@@ -39,6 +39,26 @@ public class GradServiceImpl implements GradService {
         return gradSearchStudent.get(0);
     }
 
+    @Override
+    public GraduationData graduateStudent(String studentID, String program) throws GenericHTTPRequestServiceException, NotFoundException {
+        String url = gttsProperties.getAndExpandEndPoint("grad-algorithm-api-graduate", Map.of("studentId", studentID.toString(), "gradProgram", program));
+        GraduationData graduationData = requestService.get(url, GraduationData.class);
+        if(graduationData == null){
+            throw new NotFoundException("Student with id: " + studentID.toString() + " not found during graduateStudent");
+        }
+        return graduationData;
+    }
+
+    @Override
+    public GraduationData runProjectedGraduation(String studentID, String program) throws GenericHTTPRequestServiceException, NotFoundException {
+        String url = gttsProperties.getAndExpandEndPoint("grad-algorithm-api-projected", Map.of("studentId", studentID, "gradProgram", program, "isProjected", "true"));
+        GraduationData projectedGraduationData = requestService.get(url, GraduationData.class);
+        if(projectedGraduationData == null){
+            throw new NotFoundException("Student with id: " + studentID.toString() + " not found during graduateStudent");
+        }
+        return projectedGraduationData;
+    }
+
     // below are for returning data from grad algorithm
     // TODO: update using internal webClient
     /**public GraduationData runGradAlgorithm(UUID studentID, String program, String accessToken, ExceptionMessage exception) {
