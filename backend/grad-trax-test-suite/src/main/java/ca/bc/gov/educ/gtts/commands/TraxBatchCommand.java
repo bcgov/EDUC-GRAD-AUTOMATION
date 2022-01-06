@@ -1,6 +1,5 @@
 package ca.bc.gov.educ.gtts.commands;
 
-import ca.bc.gov.educ.gtts.model.dto.TraxStudentDto;
 import ca.bc.gov.educ.gtts.model.utils.TestPens;
 import ca.bc.gov.educ.gtts.services.TraxBatchService;
 import ca.bc.gov.educ.gtts.services.TraxService;

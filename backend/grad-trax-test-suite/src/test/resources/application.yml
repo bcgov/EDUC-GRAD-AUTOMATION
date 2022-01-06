@@ -1,0 +1,40 @@
+spring:
+  main:
+    web-application-type: none
+    banner-mode: off
+  datasource:
+    hikari:
+      pool-name: educ-grad-trax-api-cp
+      maximum-pool-size: 1
+      connection-timeout: 6000
+      max-lifetime: 600000
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+    generate-ddl: true
+logging:
+  level:
+    root: off
+gtts-properties:
+  grad-api-base-url: https://dev.grad.gov.bc.ca/
+  os-hosted-url: ${OS_HOSTED_URL}
+  auth:
+    student-api-client-id: ${STUDENT_API_CLIENT_ID}
+    student-api-client-secret: ${STUDENT_API_CLIENT_SECRET}
+    student-api-username: ${STUDENT_API_USERNAME}
+    student-api-password: ${STUDENT_API_PASSWORD}
+  service-endpoints:
+    keycloak-auth-host: ${KEYCLOAK_AUTH_HOST}
+    students-api: https://educ-grad-student-api-${gtts-properties.os-hosted-url}
+    students-api-search-by-pen: https://educ-grad-student-api-${gtts-properties.os-hosted-url}/api/v1/student/pen/{pen}
+    grad-algorithm-api-graduate: https://educ-grad-algorithm-api-77c02f-dev.apps.silver.devops.gov.bc.ca/api/v1/graduatestudent?studentID={studentId}&gradProgram={gradProgram}
+    grad-algorithm-api-projected: https://educ-grad-algorithm-api-77c02f-dev.apps.silver.devops.gov.bc.ca/api/v1/graduatestudent?studentID={studentId}&gradProgram={gradProgram}&projected={isProjected}
+    #trax-api: https://educ-grad-trax-api-${gtts-properties.os-hosted-url}
+    #batch-graduation-api: https://educ-grad-batch-graduation-api-${gtts-properties.os-hosted-url}
+    #student-graduation-api: https://educ-grad-student-graduation-api-${gtts-properties.os-hosted-url}
+    #graduation-api: https://educ-grad-graduation-api-${gtts-properties.os-hosted-url}
+    #assessment-api: https://educ-grad-assessment-api-${gtts-properties.os-hosted-url}
+    #graduation-report-api: https://educ-grad-graduation-report-api-${gtts-properties.os-hosted-url}
+    #grad-report-api: https://educ-grad-report-api-${gtts-properties.os-hosted-url}
+    #program-api: https://educ-grad-program-api-${gtts-properties.os-hosted-url}
