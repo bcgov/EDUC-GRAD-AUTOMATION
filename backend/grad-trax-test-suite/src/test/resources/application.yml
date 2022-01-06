@@ -18,14 +18,14 @@ logging:
     root: off
 gtts-properties:
   grad-api-base-url: https://dev.grad.gov.bc.ca/
-  os-hosted-url: ${OS_HOSTED_URL}
+  os-hosted-url: my.os.hosted.url
   auth:
-    student-api-client-id: ${STUDENT_API_CLIENT_ID}
-    student-api-client-secret: ${STUDENT_API_CLIENT_SECRET}
-    student-api-username: ${STUDENT_API_USERNAME}
-    student-api-password: ${STUDENT_API_PASSWORD}
+    student-api-client-id: my-api-client-id
+    student-api-client-secret: 00000000-XXXX-0000-XXXX-000000000000
+    student-api-username: fakeUserName
+    student-api-password: bogusPassword
   service-endpoints:
-    keycloak-auth-host: ${KEYCLOAK_AUTH_HOST}
+    keycloak-auth-host: https://my.keycloak.auth.host.ca
     students-api: https://educ-grad-student-api-${gtts-properties.os-hosted-url}
     students-api-search-by-pen: https://educ-grad-student-api-${gtts-properties.os-hosted-url}/api/v1/student/pen/{pen}
     grad-algorithm-api-graduate: https://educ-grad-algorithm-api-77c02f-dev.apps.silver.devops.gov.bc.ca/api/v1/graduatestudent?studentID={studentId}&gradProgram={gradProgram}

@@ -23,15 +23,6 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringRunner.class)
 public class GradServiceTests {
 
-	static {
-		System.setProperty("OS_HOSTED_URL", "my.os.hosted.url");
-		System.setProperty("KEYCLOAK_AUTH_HOST", "https://my.keycloak.auth.host.ca");
-		System.setProperty("STUDENT_API_CLIENT_ID", "my-api-client-id");
-		System.setProperty("STUDENT_API_CLIENT_SECRET", "00000000-XXXX-0000-XXXX-000000000000");
-		System.setProperty("STUDENT_API_USERNAME", "fakeUserName");
-		System.setProperty("STUDENT_API_PASSWORD", "bogusPassword");
-	}
-
 	@Before
 	public void init() {
 		MockitoAnnotations.openMocks(this);
