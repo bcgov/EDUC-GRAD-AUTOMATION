@@ -3,6 +3,8 @@ package ca.bc.gov.educ.gtts.config;
 import ca.bc.gov.educ.gtts.exception.IOUtilsException;
 import ca.bc.gov.educ.gtts.io.IOUtils;
 import ca.bc.gov.educ.gtts.model.dto.TraxGradComparatorDto;
+import org.javers.core.Javers;
+import org.javers.core.JaversBuilder;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,6 +40,11 @@ public class Config {
     @Bean
     public RestTemplate getWebClient(){
         return new RestTemplate();
+    }
+
+    @Bean
+    public Javers getJavers(){
+        return JaversBuilder.javers().build();
     }
 
 
