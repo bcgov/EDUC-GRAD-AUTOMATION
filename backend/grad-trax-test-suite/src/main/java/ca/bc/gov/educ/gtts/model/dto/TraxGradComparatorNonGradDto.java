@@ -11,5 +11,6 @@ public class TraxGradComparatorNonGradDto {
 
     String pen;
     String nonGradCode;
+    String nonGradDescription;
 
 }

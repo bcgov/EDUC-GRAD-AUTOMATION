@@ -10,7 +10,7 @@ public class ReportServiceImpl implements ReportService {
     public void reportDifferences(String ref, Diff diff) {
         if(diff.hasChanges()){
             //TODO: output to file or other means
-            System.out.println(ref + " had the following reported differences: " + diff.changesSummary());
+            System.out.println(ref + " had the following reported differences: " + diff.prettyPrint());
         }
     }
 }

@@ -66,13 +66,13 @@ public class ComparatorServiceTests {
     private static List<TraxGradComparatorNonGradDto> getGradComparatorNonGradDtoList(int size, String pen){
         List<TraxGradComparatorNonGradDto> list = new ArrayList<>();
         for (int i = 0; i < size-1; i++) {
-            list.add(getTraxGradComparatorNonGradDto(pen, "700"));
+            list.add(getTraxGradComparatorNonGradDto(pen, "700", "Generic description"));
         }
         return list;
     }
 
-    private static TraxGradComparatorNonGradDto getTraxGradComparatorNonGradDto(String pen, String nonGradCode){
-        return new TraxGradComparatorNonGradDto(pen, nonGradCode);
+    private static TraxGradComparatorNonGradDto getTraxGradComparatorNonGradDto(String pen, String nonGradCode, String nonGradDescription){
+        return new TraxGradComparatorNonGradDto(pen, nonGradCode, nonGradDescription);
     }
 
     private static String getRandomPen(){
