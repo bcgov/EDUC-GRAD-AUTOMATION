@@ -36,7 +36,7 @@ public class TraxBatchServiceImpl implements TraxBatchService {
     public boolean runTest(List<String> pens) {
         try {
             for (String pen : pens) {
-                System.out.println("Processing: " + pen);
+                System.out.print("Processing: " + pen);
                 // get info from TRAX
                 TraxGradComparatorDto traxGradComparatorDtoFromTrax = getTraxGradComparatorDtoFromTrax(pen);
                 // fetch info from GRAD
@@ -45,9 +45,10 @@ public class TraxBatchServiceImpl implements TraxBatchService {
                 Diff diffs = comparatorService.compareTraxGradDTOs(traxGradComparatorDtoFromTrax, traxGradComparatorDtoFromGRAD);
                 // if diffs, report
                 if(diffs.hasChanges()){
+                    System.out.println("");
                     reportService.reportDifferences(pen, diffs);
                 } else {
-                    System.out.println("Completed processing: " + pen + ". No differences.");
+                    System.out.println(" -- No differences.");
                 }
             }
 
