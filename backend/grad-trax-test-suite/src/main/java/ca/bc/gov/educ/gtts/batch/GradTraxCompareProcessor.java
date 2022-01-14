@@ -31,8 +31,8 @@ public class GradTraxCompareProcessor implements ItemProcessor<String, String> {
 
     @Override
     public String process(String pen) throws Exception {
-        System.out.print("Processing: " + pen);
-        String msg = "";
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append(pen);
         // get info from TRAX
         TraxGradComparatorDto traxGradComparatorDtoFromTrax = getTraxGradComparatorDtoFromTrax(pen);
         // fetch info from GRAD
@@ -41,12 +41,11 @@ public class GradTraxCompareProcessor implements ItemProcessor<String, String> {
         Diff diffs = comparatorService.compareTraxGradDTOs(traxGradComparatorDtoFromTrax, traxGradComparatorDtoFromGRAD);
         // if diffs, report
         if(diffs.hasChanges()){
-            msg = pen + pen + " had the following diffs: " + diffs.prettyPrint();
-            //reportService.reportDifferences(pen, diffs);
+            stringBuffer.append(" had the following diffs: \n" + diffs.prettyPrint());
         } else {
-            System.out.println(" -- No differences.");
+            stringBuffer.append(" -- No differences.");
         }
-        return msg;
+        return stringBuffer.toString();
     }
     private TraxGradComparatorDto getTraxGradComparatorDtoFromTrax(String pen) throws NotFoundException {
         TswTranDemogEntity tswTranDemogEntity = traxService.getTransDemogEntity(pen);

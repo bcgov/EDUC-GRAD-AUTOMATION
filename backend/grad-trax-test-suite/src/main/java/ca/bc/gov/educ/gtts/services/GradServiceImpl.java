@@ -9,6 +9,7 @@ import ca.bc.gov.educ.gtts.model.dto.grad.algorithm.GraduationData;
 import ca.bc.gov.educ.gtts.utilities.JSONUtilities;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Service
+@Scope("prototype")
 public class GradServiceImpl implements GradService {
 
     private GenericHTTPRequestService requestService;

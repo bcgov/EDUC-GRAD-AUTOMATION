@@ -14,4 +14,6 @@ public interface ReportService {
      */
     void reportDifferences(String ref, Diff diff);
 
+    void report(String s);
+
 }
