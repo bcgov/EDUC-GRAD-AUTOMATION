@@ -17,8 +17,11 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
+import org.springframework.core.task.TaskExecutor;
 
 import javax.sql.DataSource;
 import java.util.Arrays;
@@ -42,6 +45,12 @@ public class TraxGradBatchConfig extends DefaultBatchConfigurer {
     public void setDataSource(DataSource dataSource) {
         // override to do not set datasource even if a datasource exist.
         // initialize will use a Map based JobRepository (instead of database)
+    }
+
+    @Bean
+    @Qualifier("traxGradBatchExecutor")
+    public TaskExecutor taskExecutor() {
+        return new SimpleAsyncTaskExecutor("spring_batch");
     }
 
     @Bean
@@ -72,13 +81,15 @@ public class TraxGradBatchConfig extends DefaultBatchConfigurer {
             ItemReader<String> itemReader,
             ItemProcessor<String, String> itemProcessor,
             ItemWriter<String> itemWriter,
-            StepBuilderFactory stepBuilderFactory
+            StepBuilderFactory stepBuilderFactory,
+            @Qualifier("traxGradBatchExecutor") TaskExecutor taskExecutor
     ){
         return stepBuilderFactory.get("traxGradCompareStep")
                 .<String, String>chunk(1)
                 .reader(itemReader)
                 .processor(itemProcessor)
                 .writer(itemWriter)
+                .taskExecutor(taskExecutor)
                 .build();
     }
 
