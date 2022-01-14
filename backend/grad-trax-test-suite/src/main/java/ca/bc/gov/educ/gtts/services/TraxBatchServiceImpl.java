@@ -9,6 +9,14 @@ import ca.bc.gov.educ.gtts.model.entity.TswTranDemogEntity;
 import ca.bc.gov.educ.gtts.model.entity.TswTranNonGradEntity;
 import ca.bc.gov.educ.gtts.model.transformer.TraxGradComparisonTransformer;
 import org.javers.core.diff.Diff;
+import org.springframework.batch.core.Job;
+import org.springframework.batch.core.JobParametersBuilder;
+import org.springframework.batch.core.JobParametersInvalidException;
+import org.springframework.batch.core.configuration.JobRegistry;
+import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
+import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
+import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,14 +30,22 @@ public class TraxBatchServiceImpl implements TraxBatchService {
     private TraxGradComparisonTransformer traxGradComparisonTransformer;
     private ComparatorService comparatorService;
     private ReportService reportService;
+    private JobLauncher jobLauncher;
+    private Job traxGradCompareJob;
+
+    private static final String TIME="time";
+    private static final String JOB_TRIGGER="jobTrigger";
+    private static final String JOB_TYPE="jobType";
 
     @Autowired
-    public TraxBatchServiceImpl(GradService gradService, TraxService traxService, TraxGradComparisonTransformer traxGradComparisonTransformer, ComparatorService comparatorService, ReportService reportService) {
+    public TraxBatchServiceImpl(GradService gradService, TraxService traxService, TraxGradComparisonTransformer traxGradComparisonTransformer, ComparatorService comparatorService, ReportService reportService, JobLauncher jobLauncher, Job traxGradCompareJob) {
         this.gradService = gradService;
         this.traxService = traxService;
         this.traxGradComparisonTransformer = traxGradComparisonTransformer;
         this.comparatorService = comparatorService;
         this.reportService = reportService;
+        this.jobLauncher = jobLauncher;
+        this.traxGradCompareJob = traxGradCompareJob;
     }
 
     @Override
@@ -55,6 +71,26 @@ public class TraxBatchServiceImpl implements TraxBatchService {
         } catch (GenericHTTPRequestServiceException e) {
             e.printStackTrace();
         } catch (NotFoundException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    @Override
+    public boolean runBatchTest() {
+        JobParametersBuilder builder = new JobParametersBuilder();
+        builder.addLong(TIME, System.currentTimeMillis()).toJobParameters();
+        builder.addString(JOB_TRIGGER, "BATCH");
+        builder.addString(JOB_TYPE, "TRAXGRADCOMPAREBATCH");
+        try {
+            jobLauncher.run(traxGradCompareJob, builder.toJobParameters());
+        } catch (JobExecutionAlreadyRunningException e) {
+            e.printStackTrace();
+        } catch (JobRestartException e) {
+            e.printStackTrace();
+        } catch (JobInstanceAlreadyCompleteException e) {
+            e.printStackTrace();
+        } catch (JobParametersInvalidException e) {
             e.printStackTrace();
         }
         return true;

@@ -9,4 +9,6 @@ public interface TraxBatchService {
 
     boolean runTest(List<String> pens);
 
+    boolean runBatchTest();
+
 }

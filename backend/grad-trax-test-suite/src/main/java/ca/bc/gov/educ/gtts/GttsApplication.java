@@ -1,6 +1,7 @@
 package ca.bc.gov.educ.gtts;
 
 import ca.bc.gov.educ.gtts.commands.BaseCommand;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.ExitCodeGenerator;
 import org.springframework.boot.SpringApplication;
