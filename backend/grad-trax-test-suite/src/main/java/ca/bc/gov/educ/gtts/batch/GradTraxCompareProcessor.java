@@ -10,6 +10,7 @@ import ca.bc.gov.educ.gtts.model.entity.TswTranNonGradEntity;
 import ca.bc.gov.educ.gtts.model.transformer.TraxGradComparisonTransformer;
 import ca.bc.gov.educ.gtts.services.ComparatorService;
 import ca.bc.gov.educ.gtts.services.GradService;
+import ca.bc.gov.educ.gtts.services.ReportService;
 import ca.bc.gov.educ.gtts.services.TraxService;
 import org.javers.core.diff.Diff;
 import org.springframework.batch.item.ItemProcessor;
@@ -27,6 +28,8 @@ public class GradTraxCompareProcessor implements ItemProcessor<String, String> {
     private TraxGradComparisonTransformer traxGradComparisonTransformer;
     @Autowired
     private ComparatorService comparatorService;
+    @Autowired
+    private ReportService reportService;
 
 
     @Override
@@ -38,15 +41,17 @@ public class GradTraxCompareProcessor implements ItemProcessor<String, String> {
         // fetch info from GRAD
         TraxGradComparatorDto traxGradComparatorDtoFromGRAD = getTraxGradComparatorDtoFromGradAlgorithm(pen);
         // compare
-        Diff diffs = comparatorService.compareTraxGradDTOs(traxGradComparatorDtoFromTrax, traxGradComparatorDtoFromGRAD);
+        /**Diff diffs = comparatorService.compareTraxGradDTOs(traxGradComparatorDtoFromTrax, traxGradComparatorDtoFromGRAD);
         // if diffs, report
         if(diffs.hasChanges()){
             stringBuffer.append(" had the following diffs: \n" + diffs.prettyPrint());
         } else {
             stringBuffer.append(" -- No differences.");
-        }
-        return stringBuffer.toString();
+        }**/
+        return "processing TRAX: " + traxGradComparatorDtoFromTrax.getPen() + " GRAD: " + traxGradComparatorDtoFromGRAD.getPen();
+
     }
+
     private TraxGradComparatorDto getTraxGradComparatorDtoFromTrax(String pen) throws NotFoundException {
         TswTranDemogEntity tswTranDemogEntity = traxService.getTransDemogEntity(pen);
         if(tswTranDemogEntity == null){
@@ -56,7 +61,7 @@ public class GradTraxCompareProcessor implements ItemProcessor<String, String> {
         return traxGradComparisonTransformer.getTraxGradComparatorDto(tswTranDemogEntity, nonGradReasons);
     }
 
-    private TraxGradComparatorDto getTraxGradComparatorDtoFromGradAlgorithm(String pen) throws NotFoundException, GenericHTTPRequestServiceException {
+    private synchronized TraxGradComparatorDto getTraxGradComparatorDtoFromGradAlgorithm(String pen) throws NotFoundException, GenericHTTPRequestServiceException {
         GradSearchStudent gradSearchStudent = gradService.getStudentByPen(pen);
         GraduationData projectedGraduationData = gradService.runProjectedGraduation(gradSearchStudent.getStudentID(), gradSearchStudent.getProgram());
         return traxGradComparisonTransformer.getTraxGradComparatorDto(projectedGraduationData);

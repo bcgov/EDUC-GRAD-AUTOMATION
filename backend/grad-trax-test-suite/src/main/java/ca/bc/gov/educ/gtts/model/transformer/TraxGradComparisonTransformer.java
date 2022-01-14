@@ -6,6 +6,7 @@ import ca.bc.gov.educ.gtts.model.dto.grad.algorithm.GradRequirement;
 import ca.bc.gov.educ.gtts.model.dto.grad.algorithm.GraduationData;
 import ca.bc.gov.educ.gtts.model.entity.TswTranDemogEntity;
 import ca.bc.gov.educ.gtts.model.entity.TswTranNonGradEntity;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
  * Transforms TRAX and GRAD produced beans into comparator model format
  */
 @Component
+@Scope("prototype")
 public class TraxGradComparisonTransformer {
 
     /**

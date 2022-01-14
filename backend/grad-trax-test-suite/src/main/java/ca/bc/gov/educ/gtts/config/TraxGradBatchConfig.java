@@ -56,13 +56,16 @@ public class TraxGradBatchConfig extends DefaultBatchConfigurer {
     @Bean
     public GradTraxCompareReader getGradTraxCompareReader() {
         //TestPens testPens = JSONUtilities.serializeJSONFileToObject(System.getProperty("TEST_PENS"), TestPens.class);
-        List<String> testPens = Arrays.asList(new String[]{"117175729",
+        List<String> testPens = Arrays.asList(
+                new String[]{
+                "117175729",
                 "124781733",
                 "124304700",
                 "125999052",
                 "126774009",
                 "127518017",
-                "127780997"});
+                "127780997"
+                });
         return new GradTraxCompareReader(testPens);
     }
 
@@ -90,6 +93,7 @@ public class TraxGradBatchConfig extends DefaultBatchConfigurer {
                 .processor(itemProcessor)
                 .writer(itemWriter)
                 .taskExecutor(taskExecutor)
+                .throttleLimit(4)
                 .build();
     }
 

@@ -46,7 +46,7 @@ public class GradServiceImpl implements GradService {
         String url = gttsProperties.getAndExpandEndPoint("grad-algorithm-api-graduate", Map.of("studentId", studentID.toString(), "gradProgram", program));
         GraduationData graduationData = requestService.get(url, GraduationData.class);
         if(graduationData == null){
-            throw new NotFoundException("Student with id: " + studentID.toString() + " not found during graduateStudent");
+            throw new NotFoundException("Student with id: " + studentID + " not found during graduateStudent");
         }
         return graduationData;
     }
@@ -56,7 +56,7 @@ public class GradServiceImpl implements GradService {
         String url = gttsProperties.getAndExpandEndPoint("grad-algorithm-api-projected", Map.of("studentId", studentID, "gradProgram", program, "isProjected", "true"));
         GraduationData projectedGraduationData = requestService.get(url, GraduationData.class);
         if(projectedGraduationData == null){
-            throw new NotFoundException("Student with id: " + studentID.toString() + " not found during graduateStudent");
+            throw new NotFoundException("Student with id: " + studentID + " not found during graduateStudent");
         }
         return projectedGraduationData;
     }

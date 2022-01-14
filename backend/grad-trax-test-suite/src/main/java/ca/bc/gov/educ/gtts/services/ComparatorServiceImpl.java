@@ -4,9 +4,11 @@ import ca.bc.gov.educ.gtts.model.dto.TraxGradComparatorDto;
 import org.javers.core.Javers;
 import org.javers.core.diff.Diff;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class ComparatorServiceImpl implements ComparatorService {
 
     private Javers javers;
