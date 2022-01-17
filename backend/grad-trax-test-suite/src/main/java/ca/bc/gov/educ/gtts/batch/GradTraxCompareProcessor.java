@@ -40,15 +40,16 @@ public class GradTraxCompareProcessor implements ItemProcessor<String, String> {
         TraxGradComparatorDto traxGradComparatorDtoFromTrax = getTraxGradComparatorDtoFromTrax(pen);
         // fetch info from GRAD
         TraxGradComparatorDto traxGradComparatorDtoFromGRAD = getTraxGradComparatorDtoFromGradAlgorithm(pen);
+
         // compare
-        /**Diff diffs = comparatorService.compareTraxGradDTOs(traxGradComparatorDtoFromTrax, traxGradComparatorDtoFromGRAD);
+        Diff diffs = comparatorService.compareTraxGradDTOs(traxGradComparatorDtoFromTrax, traxGradComparatorDtoFromGRAD);
         // if diffs, report
         if(diffs.hasChanges()){
             stringBuffer.append(" had the following diffs: \n" + diffs.prettyPrint());
         } else {
             stringBuffer.append(" -- No differences.");
-        }**/
-        return "processing TRAX: " + traxGradComparatorDtoFromTrax.getPen() + " GRAD: " + traxGradComparatorDtoFromGRAD.getPen();
+        }
+        return stringBuffer.toString();
 
     }
 
@@ -61,7 +62,7 @@ public class GradTraxCompareProcessor implements ItemProcessor<String, String> {
         return traxGradComparisonTransformer.getTraxGradComparatorDto(tswTranDemogEntity, nonGradReasons);
     }
 
-    private synchronized TraxGradComparatorDto getTraxGradComparatorDtoFromGradAlgorithm(String pen) throws NotFoundException, GenericHTTPRequestServiceException {
+    private TraxGradComparatorDto getTraxGradComparatorDtoFromGradAlgorithm(String pen) throws NotFoundException, GenericHTTPRequestServiceException {
         GradSearchStudent gradSearchStudent = gradService.getStudentByPen(pen);
         GraduationData projectedGraduationData = gradService.runProjectedGraduation(gradSearchStudent.getStudentID(), gradSearchStudent.getProgram());
         return traxGradComparisonTransformer.getTraxGradComparatorDto(projectedGraduationData);

@@ -13,6 +13,7 @@ import org.springframework.batch.core.configuration.annotation.DefaultBatchConfi
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
@@ -22,10 +23,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import javax.sql.DataSource;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Configures the TRAX/GRAD comparison batch
@@ -47,10 +50,22 @@ public class TraxGradBatchConfig extends DefaultBatchConfigurer {
         // initialize will use a Map based JobRepository (instead of database)
     }
 
-    @Bean
+    /*@Bean
     @Qualifier("traxGradBatchExecutor")
     public TaskExecutor taskExecutor() {
         return new SimpleAsyncTaskExecutor("spring_batch");
+    }*/
+
+    @Bean
+    @Qualifier("traxGradBatchExecutor")
+    public TaskExecutor taskExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(4);
+        executor.setMaxPoolSize(4);
+        executor.setQueueCapacity(4);
+        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        executor.setThreadNamePrefix("MultiThreaded-");
+        return executor;
     }
 
     @Bean
@@ -93,7 +108,6 @@ public class TraxGradBatchConfig extends DefaultBatchConfigurer {
                 .processor(itemProcessor)
                 .writer(itemWriter)
                 .taskExecutor(taskExecutor)
-                .throttleLimit(4)
                 .build();
     }
 
@@ -104,6 +118,7 @@ public class TraxGradBatchConfig extends DefaultBatchConfigurer {
     ){
         // TODO: add completion listener
         return jobBuilderFactory.get("traxGradCompareJob")
+                .incrementer(new RunIdIncrementer())
                 .flow(traxGradCompareStep)
                 .end()
                 .build();
