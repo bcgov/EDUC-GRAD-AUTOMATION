@@ -3,9 +3,6 @@ package ca.bc.gov.educ.gtts.config;
 import ca.bc.gov.educ.gtts.batch.GradTraxCompareProcessor;
 import ca.bc.gov.educ.gtts.batch.GradTraxCompareReader;
 import ca.bc.gov.educ.gtts.batch.GradTraxCompareWriter;
-import ca.bc.gov.educ.gtts.exception.JSONUtilitiesException;
-import ca.bc.gov.educ.gtts.model.utils.TestPens;
-import ca.bc.gov.educ.gtts.utilities.JSONUtilities;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.JobRegistry;
@@ -14,6 +11,8 @@ import org.springframework.batch.core.configuration.annotation.EnableBatchProces
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.integration.async.AsyncItemProcessor;
+import org.springframework.batch.integration.async.AsyncItemWriter;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
@@ -21,13 +20,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import javax.sql.DataSource;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
@@ -90,20 +89,35 @@ public class TraxGradBatchConfig extends DefaultBatchConfigurer {
     }
 
     @Bean
+    public AsyncItemProcessor<String, String> getAsyncItemProcessor(GradTraxCompareProcessor gradTraxCompareProcessor, @Qualifier("traxGradBatchExecutor") TaskExecutor taskExecutor) {
+        AsyncItemProcessor<String, String> asyncItemProcessor = new AsyncItemProcessor<>();
+        asyncItemProcessor.setDelegate(gradTraxCompareProcessor);
+        //asyncItemProcessor.setTaskExecutor(taskExecutor);
+        return asyncItemProcessor;
+    }
+
+    @Bean
     public GradTraxCompareWriter getGradTraxCompareWriter() {
         return new GradTraxCompareWriter();
     }
 
     @Bean
+    public AsyncItemWriter<String> getAsyncItemWriter(GradTraxCompareWriter gradTraxCompareWriter){
+        AsyncItemWriter<String> asyncItemWriter = new AsyncItemWriter<>();
+        asyncItemWriter.setDelegate(gradTraxCompareWriter);
+        return asyncItemWriter;
+    }
+
+    @Bean
     public Step traxGradCompareStep(
             ItemReader<String> itemReader,
-            ItemProcessor<String, String> itemProcessor,
-            ItemWriter<String> itemWriter,
+            AsyncItemProcessor<String, String> itemProcessor,
+            AsyncItemWriter<String> itemWriter,
             StepBuilderFactory stepBuilderFactory,
             @Qualifier("traxGradBatchExecutor") TaskExecutor taskExecutor
     ){
         return stepBuilderFactory.get("traxGradCompareStep")
-                .<String, String>chunk(1)
+                .<String, Future<String>>chunk(1)
                 .reader(itemReader)
                 .processor(itemProcessor)
                 .writer(itemWriter)
