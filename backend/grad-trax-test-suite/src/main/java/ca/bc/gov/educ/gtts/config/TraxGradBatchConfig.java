@@ -59,9 +59,9 @@ public class TraxGradBatchConfig extends DefaultBatchConfigurer {
     @Qualifier("traxGradBatchExecutor")
     public TaskExecutor taskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(4);
-        executor.setMaxPoolSize(4);
-        executor.setQueueCapacity(4);
+        executor.setCorePoolSize(2);
+        executor.setMaxPoolSize(2);
+        executor.setQueueCapacity(2);
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         executor.setThreadNamePrefix("MultiThreaded-");
         return executor;
