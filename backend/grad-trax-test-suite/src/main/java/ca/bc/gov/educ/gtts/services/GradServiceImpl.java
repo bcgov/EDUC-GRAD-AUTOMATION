@@ -41,6 +41,16 @@ public class GradServiceImpl implements GradService {
     }
 
     @Override
+    public GradSearchStudent getStudentByID(String id) throws GenericHTTPRequestServiceException, NotFoundException {
+        String url = gttsProperties.getAndExpandEndPoint("students-api-search-by-id", Map.of("stdid", id));
+        GradSearchStudent gradSearchStudent = requestService.get(url, GradSearchStudent.class);
+        if(gradSearchStudent == null){
+            throw new NotFoundException("Student with id: " + id + " not found.");
+        }
+        return gradSearchStudent;
+    }
+
+    @Override
     public GraduationData graduateStudent(String studentID, String program) throws GenericHTTPRequestServiceException, NotFoundException {
         String url = gttsProperties.getAndExpandEndPoint("grad-algorithm-api-graduate", Map.of("studentId", studentID.toString(), "gradProgram", program));
         GraduationData graduationData = requestService.get(url, GraduationData.class);

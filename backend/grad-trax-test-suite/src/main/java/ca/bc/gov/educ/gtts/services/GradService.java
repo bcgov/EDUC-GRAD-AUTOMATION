@@ -17,6 +17,8 @@ public interface GradService {
 
     GradSearchStudent getStudentByPen(String pen) throws GenericHTTPRequestServiceException, NotFoundException;
 
+    GradSearchStudent getStudentByID(String id) throws GenericHTTPRequestServiceException, NotFoundException;
+
     GraduationData graduateStudent(String studentID, String program) throws GenericHTTPRequestServiceException, NotFoundException;
 
     GraduationData runProjectedGraduation(String studentID, String program) throws GenericHTTPRequestServiceException, NotFoundException;

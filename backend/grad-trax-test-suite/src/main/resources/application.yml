@@ -33,8 +33,9 @@ gtts-properties:
     students-api: https://educ-grad-student-api-${gtts-properties.os-hosted-url}
     students-api-projectedgrad-list: https://educ-grad-student-api-${gtts-properties.os-hosted-url}/api/v1/student/projected
     students-api-search-by-pen: https://educ-grad-student-api-${gtts-properties.os-hosted-url}/api/v1/student/pen/{pen}
-    grad-algorithm-api-graduate: https://educ-grad-algorithm-api-77c02f-dev.apps.silver.devops.gov.bc.ca/api/v1/graduatestudent?studentID={studentId}&gradProgram={gradProgram}
-    grad-algorithm-api-projected: https://educ-grad-algorithm-api-77c02f-dev.apps.silver.devops.gov.bc.ca/api/v1/graduatestudent?studentID={studentId}&gradProgram={gradProgram}&projected={isProjected}
+    students-api-search-by-id: https://educ-grad-student-api-${gtts-properties.os-hosted-url}/api/v1/student/stdid/{stdid}
+    grad-algorithm-api-graduate: https://educ-grad-algorithm-api-${gtts-properties.os-hosted-url}/api/v1/graduatestudent?studentID={studentId}&gradProgram={gradProgram}
+    grad-algorithm-api-projected: https://educ-grad-algorithm-api-${gtts-properties.os-hosted-url}/api/v1/graduatestudent?studentID={studentId}&gradProgram={gradProgram}&projected={isProjected}
     #trax-api: https://educ-grad-trax-api-${gtts-properties.os-hosted-url}
     #batch-graduation-api: https://educ-grad-batch-graduation-api-${gtts-properties.os-hosted-url}
     #student-graduation-api: https://educ-grad-student-graduation-api-${gtts-properties.os-hosted-url}
