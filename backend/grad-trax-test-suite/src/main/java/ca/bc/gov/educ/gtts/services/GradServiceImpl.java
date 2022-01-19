@@ -73,10 +73,20 @@ public class GradServiceImpl implements GradService {
     @Override
     public List<GraduationStudentRecord> getProjectedGradStudentList() throws GenericHTTPRequestServiceException, NotFoundException {
         String url = gttsProperties.getEndPoint("students-api-projectedgrad-list");
+        return getGradStudentList(url);
+    }
+
+    @Override
+    public List<GraduationStudentRecord> getGradStudentList() throws GenericHTTPRequestServiceException, NotFoundException {
+        String url = gttsProperties.getEndPoint("students-api-grad-list");
+        return getGradStudentList(url);
+    }
+
+    private List<GraduationStudentRecord> getGradStudentList(String url) throws NotFoundException, GenericHTTPRequestServiceException {
         List records = requestService.get(url, ArrayList.class);
         List<GraduationStudentRecord> gradStudentRecords = JSONUtilities.serializeListOfJSONToObjectList(records, new TypeReference<List<GraduationStudentRecord>>(){});
         if(gradStudentRecords == null || gradStudentRecords.isEmpty()){
-            throw new NotFoundException("No records were returned from StudentsAPI for projected graduation.");
+            throw new NotFoundException("No records were returned from StudentsAPI for (projected) graduation.");
         }
         return gradStudentRecords;
     }

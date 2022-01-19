@@ -32,6 +32,7 @@ gtts-properties:
     keycloak-auth-host: ${KEYCLOAK_AUTH_HOST}
     students-api: https://educ-grad-student-api-${gtts-properties.os-hosted-url}
     students-api-projectedgrad-list: https://educ-grad-student-api-${gtts-properties.os-hosted-url}/api/v1/student/projected
+    students-api-grad-list: https://educ-grad-student-api-${gtts-properties.os-hosted-url}/api/v1/student/recalculate
     students-api-search-by-pen: https://educ-grad-student-api-${gtts-properties.os-hosted-url}/api/v1/student/pen/{pen}
     students-api-search-by-id: https://educ-grad-student-api-${gtts-properties.os-hosted-url}/api/v1/student/stdid/{stdid}
     grad-algorithm-api-graduate: https://educ-grad-algorithm-api-${gtts-properties.os-hosted-url}/api/v1/graduatestudent?studentID={studentId}&gradProgram={gradProgram}

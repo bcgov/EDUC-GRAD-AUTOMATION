@@ -25,4 +25,6 @@ public interface GradService {
 
     List<GraduationStudentRecord> getProjectedGradStudentList() throws GenericHTTPRequestServiceException, NotFoundException;
 
+    List<GraduationStudentRecord> getGradStudentList() throws GenericHTTPRequestServiceException, NotFoundException;
+
 }
