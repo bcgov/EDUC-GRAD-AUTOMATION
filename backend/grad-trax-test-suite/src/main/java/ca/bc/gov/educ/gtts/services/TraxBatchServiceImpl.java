@@ -5,6 +5,7 @@ import ca.bc.gov.educ.gtts.exception.NotFoundException;
 import ca.bc.gov.educ.gtts.model.dto.GradSearchStudent;
 import ca.bc.gov.educ.gtts.model.dto.TraxGradComparatorDto;
 import ca.bc.gov.educ.gtts.model.dto.grad.algorithm.GraduationData;
+import ca.bc.gov.educ.gtts.model.dto.students.api.GraduationStudentRecord;
 import ca.bc.gov.educ.gtts.model.entity.TswTranDemogEntity;
 import ca.bc.gov.educ.gtts.model.entity.TswTranNonGradEntity;
 import ca.bc.gov.educ.gtts.model.transformer.TraxGradComparisonTransformer;
@@ -58,6 +59,21 @@ public class TraxBatchServiceImpl implements TraxBatchService {
             e.printStackTrace();
         }
         return true;
+    }
+
+    @Override
+    public boolean runTest() {
+        try {
+            List<GraduationStudentRecord> graduationStudentRecords = gradService.getProjectedGradStudentList();
+            for (GraduationStudentRecord record : graduationStudentRecords) {
+                System.out.println(record.getStudentID());
+            }
+        } catch (GenericHTTPRequestServiceException e) {
+            e.printStackTrace();
+        } catch (NotFoundException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 

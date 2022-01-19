@@ -37,8 +37,9 @@ public class TraxBatchCommand implements Callable<Integer> {
     @Override
     public Integer call() throws Exception {
         // TODO: update methods
-        TestPens testPens = JSONUtilities.serializeJSONFileToObject(filePath, TestPens.class);
-        traxBatchService.runTest(testPens.getTestPens());
+        //TestPens testPens = JSONUtilities.serializeJSONFileToObject(filePath, TestPens.class);
+        //traxBatchService.runTest(testPens.getTestPens());
+        traxBatchService.runTest();
         return 0;
     }
 
