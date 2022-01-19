@@ -6,6 +6,7 @@ import ca.bc.gov.educ.gtts.exception.NotFoundException;
 import ca.bc.gov.educ.gtts.model.dto.GradSearchStudent;
 import ca.bc.gov.educ.gtts.model.dto.grad.algorithm.ExceptionMessage;
 import ca.bc.gov.educ.gtts.model.dto.grad.algorithm.GraduationData;
+import ca.bc.gov.educ.gtts.model.dto.students.api.GraduationStudentRecord;
 import ca.bc.gov.educ.gtts.utilities.JSONUtilities;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,17 @@ public class GradServiceImpl implements GradService {
             throw new NotFoundException("Student with id: " + studentID + " not found during graduateStudent");
         }
         return projectedGraduationData;
+    }
+
+    @Override
+    public List<GraduationStudentRecord> getProjectedGradStudentList() throws GenericHTTPRequestServiceException, NotFoundException {
+        String url = gttsProperties.getEndPoint("students-api-projectedgrad-list");
+        List records = requestService.get(url, ArrayList.class);
+        List<GraduationStudentRecord> gradStudentRecords = JSONUtilities.serializeListOfJSONToObjectList(records, new TypeReference<List<GraduationStudentRecord>>(){});
+        if(gradStudentRecords == null || gradStudentRecords.isEmpty()){
+            throw new NotFoundException("No records were returned from StudentsAPI for projected graduation.");
+        }
+        return gradStudentRecords;
     }
 
     // below are for returning data from grad algorithm

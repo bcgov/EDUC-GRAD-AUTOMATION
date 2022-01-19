@@ -31,6 +31,7 @@ gtts-properties:
   service-endpoints:
     keycloak-auth-host: ${KEYCLOAK_AUTH_HOST}
     students-api: https://educ-grad-student-api-${gtts-properties.os-hosted-url}
+    students-api-projectedgrad-list: https://educ-grad-student-api-${gtts-properties.os-hosted-url}/api/v1/student/projected
     students-api-search-by-pen: https://educ-grad-student-api-${gtts-properties.os-hosted-url}/api/v1/student/pen/{pen}
     grad-algorithm-api-graduate: https://educ-grad-algorithm-api-77c02f-dev.apps.silver.devops.gov.bc.ca/api/v1/graduatestudent?studentID={studentId}&gradProgram={gradProgram}
     grad-algorithm-api-projected: https://educ-grad-algorithm-api-77c02f-dev.apps.silver.devops.gov.bc.ca/api/v1/graduatestudent?studentID={studentId}&gradProgram={gradProgram}&projected={isProjected}
