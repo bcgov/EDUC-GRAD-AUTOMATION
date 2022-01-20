@@ -1,5 +1,7 @@
 package ca.bc.gov.educ.gtts.services;
 
+import ca.bc.gov.educ.gtts.exception.TraxBatchServiceException;
+
 import java.util.List;
 
 /**
@@ -7,8 +9,8 @@ import java.util.List;
  */
 public interface TraxBatchService {
 
-    boolean runTest(List<String> pens);
+    boolean runTest(List<String> pens) throws TraxBatchServiceException;
 
-    boolean runTest();
+    boolean runTest() throws TraxBatchServiceException;
 
 }

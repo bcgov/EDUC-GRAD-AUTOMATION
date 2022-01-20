@@ -28,9 +28,6 @@ public class TraxGradComparisonTransformer {
         traxGradComparatorDto.setGradFlag(tswTranDemogEntity.getGradFlag());
         traxGradComparatorDto.setGradReqtYear(tswTranDemogEntity.getGradReqtYear());
         traxGradComparatorDto.setPen(tswTranDemogEntity.getStudNo());
-        // holding off on update date for now
-        //traxGradComparatorDto.setUpdateDate(tswTranDemogEntity.getUpdateDate());
-        //TODO: finish this when we get grad code mappings
         for (TswTranNonGradEntity tswTranNonGradEntity : tswTranNonGradEntites) {
             traxGradComparatorDto.getTraxGradComparatorNonGradDtoList().add(new TraxGradComparatorNonGradDto(
                     tswTranNonGradEntity.getStudNo().trim(),

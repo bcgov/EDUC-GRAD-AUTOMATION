@@ -2,6 +2,8 @@ package ca.bc.gov.educ.gtts.services;
 
 import ca.bc.gov.educ.gtts.exception.GenericHTTPRequestServiceException;
 import ca.bc.gov.educ.gtts.exception.NotFoundException;
+import ca.bc.gov.educ.gtts.exception.TraxBatchServiceException;
+import ca.bc.gov.educ.gtts.filters.ListFilters;
 import ca.bc.gov.educ.gtts.model.dto.GradSearchStudent;
 import ca.bc.gov.educ.gtts.model.dto.TraxGradComparatorDto;
 import ca.bc.gov.educ.gtts.model.dto.grad.algorithm.GraduationData;
@@ -14,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Locale;
 
 @Service
 public class TraxBatchServiceImpl implements TraxBatchService {
@@ -24,18 +25,20 @@ public class TraxBatchServiceImpl implements TraxBatchService {
     private TraxGradComparisonTransformer traxGradComparisonTransformer;
     private ComparatorService comparatorService;
     private ReportService reportService;
+    private ListFilters listFilters;
 
     @Autowired
-    public TraxBatchServiceImpl(GradService gradService, TraxService traxService, TraxGradComparisonTransformer traxGradComparisonTransformer, ComparatorService comparatorService, ReportService reportService) {
+    public TraxBatchServiceImpl(GradService gradService, TraxService traxService, TraxGradComparisonTransformer traxGradComparisonTransformer, ComparatorService comparatorService, ReportService reportService, ListFilters listFilters) {
         this.gradService = gradService;
         this.traxService = traxService;
         this.traxGradComparisonTransformer = traxGradComparisonTransformer;
         this.comparatorService = comparatorService;
         this.reportService = reportService;
+        this.listFilters = listFilters;
     }
 
     @Override
-    public boolean runTest(List<String> pens) {
+    public boolean runTest(List<String> pens) throws TraxBatchServiceException {
         try {
             for (String pen : pens) {
                 System.out.print("Processing: " + pen);
@@ -54,21 +57,21 @@ public class TraxBatchServiceImpl implements TraxBatchService {
                 }
             }
 
-        } catch (GenericHTTPRequestServiceException e) {
-            e.printStackTrace();
-        } catch (NotFoundException e) {
-            e.printStackTrace();
+        } catch (GenericHTTPRequestServiceException | NotFoundException e) {
+            throw new TraxBatchServiceException(e.getMessage());
         }
         return true;
     }
 
     @Override
-    public boolean runTest() {
+    public boolean runTest() throws TraxBatchServiceException {
         List<GraduationStudentRecord> graduationStudentRecords = null;
         try {
-            graduationStudentRecords = gradService.getProjectedGradStudentList();
+            graduationStudentRecords = filterSccpAndNonGradPrograms(gradService.getProjectedGradStudentList());
+            //graduationStudentRecords = gradService.getProjectedGradStudentList();
+            System.out.println(graduationStudentRecords.size());
         } catch (GenericHTTPRequestServiceException | NotFoundException e) {
-            e.printStackTrace();
+            throw new TraxBatchServiceException("Failure to retrieve pens to process: " + e.getMessage());
         }
             for (GraduationStudentRecord record : graduationStudentRecords) {
                 if(!record.getProgram().toLowerCase().contains("sccp")){
@@ -97,6 +100,12 @@ public class TraxBatchServiceImpl implements TraxBatchService {
         return false;
     }
 
+    private List<GraduationStudentRecord> filterSccpAndNonGradPrograms(List<GraduationStudentRecord> graduationStudentRecordList){
+        return listFilters.filterGraduationStudentRecordList(
+                g -> !g.getProgram().toLowerCase().contains("sccp") && !g.getProgram().toLowerCase().contains("noprog"),
+                graduationStudentRecordList
+        );
+    }
 
     private TraxGradComparatorDto getTraxGradComparatorDtoFromTrax(String pen) throws NotFoundException {
         TswTranDemogEntity tswTranDemogEntity = traxService.getTransDemogEntity(pen);
