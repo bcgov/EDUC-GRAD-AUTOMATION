@@ -68,32 +68,26 @@ public class TraxBatchServiceImpl implements TraxBatchService {
         List<GraduationStudentRecord> graduationStudentRecords = null;
         try {
             graduationStudentRecords = filterSccpAndNonGradPrograms(gradService.getProjectedGradStudentList());
-            //graduationStudentRecords = gradService.getProjectedGradStudentList();
-            System.out.println(graduationStudentRecords.size());
         } catch (GenericHTTPRequestServiceException | NotFoundException e) {
             throw new TraxBatchServiceException("Failure to retrieve pens to process: " + e.getMessage());
         }
             for (GraduationStudentRecord record : graduationStudentRecords) {
-                if(!record.getProgram().toLowerCase().contains("sccp")){
-                    System.out.println("processing: " + record.getStudentID());
-                    try {
-                        TraxGradComparatorDto traxGradComparatorDtoFromGrad = getTraxGradComparatorDtoFromGradAlgorithm(record);
-                        GradSearchStudent gradSearchStudent = gradService.getStudentByID(record.getStudentID().toString());
-                        TraxGradComparatorDto traxGradComparatorDtoFromTrax = getTraxGradComparatorDtoFromTrax(gradSearchStudent.getPen());
-                        Diff diffs = comparatorService.compareTraxGradDTOs(traxGradComparatorDtoFromTrax, traxGradComparatorDtoFromGrad);
-                        // if diffs, report
-                        if(diffs.hasChanges()){
-                            System.out.println("");
-                            reportService.reportDifferences(gradSearchStudent.getPen(), diffs);
-                        } else {
-                            System.out.println(" -- No differences.");
-                        }
-                    } catch (NotFoundException | GenericHTTPRequestServiceException e) {
-                        System.out.println("Failed to process: " + record.getStudentID() + " due to: " + e.getMessage());
-                        continue;
+                System.out.println("processing: " + record.getStudentID());
+                try {
+                    TraxGradComparatorDto traxGradComparatorDtoFromGrad = getTraxGradComparatorDtoFromGradAlgorithm(record);
+                    GradSearchStudent gradSearchStudent = gradService.getStudentByID(record.getStudentID().toString());
+                    TraxGradComparatorDto traxGradComparatorDtoFromTrax = getTraxGradComparatorDtoFromTrax(gradSearchStudent.getPen());
+                    Diff diffs = comparatorService.compareTraxGradDTOs(traxGradComparatorDtoFromTrax, traxGradComparatorDtoFromGrad);
+                    // if diffs, report
+                    if(diffs.hasChanges()){
+                        System.out.println("");
+                        reportService.reportDifferences(gradSearchStudent.getPen(), diffs);
+                    } else {
+                        System.out.println(" -- No differences.");
                     }
-                } else {
-                    System.out.println("SCCP, not processing " + record.getStudentID());
+                } catch (NotFoundException | GenericHTTPRequestServiceException e) {
+                    System.out.println("Failed to process: " + record.getStudentID() + " due to: " + e.getMessage());
+                    continue;
                 }
             }
 
