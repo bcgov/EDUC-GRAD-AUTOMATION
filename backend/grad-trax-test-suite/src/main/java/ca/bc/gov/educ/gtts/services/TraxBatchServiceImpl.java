@@ -15,7 +15,10 @@ import org.javers.core.diff.Diff;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static ca.bc.gov.educ.gtts.filters.ListFilters.filterSccpAndNonGradPrograms;
+
 import java.util.List;
+import java.util.function.Predicate;
 
 @Service
 public class TraxBatchServiceImpl implements TraxBatchService {
@@ -65,12 +68,9 @@ public class TraxBatchServiceImpl implements TraxBatchService {
 
     @Override
     public boolean runTest() throws TraxBatchServiceException {
-        List<GraduationStudentRecord> graduationStudentRecords = null;
-        try {
-            graduationStudentRecords = filterSccpAndNonGradPrograms(gradService.getProjectedGradStudentList());
-        } catch (GenericHTTPRequestServiceException | NotFoundException e) {
-            throw new TraxBatchServiceException("Failure to retrieve pens to process: " + e.getMessage());
-        }
+        List<GraduationStudentRecord> graduationStudentRecords = getGraduationStudentRecordList(
+                filterSccpAndNonGradPrograms()
+        );
             for (GraduationStudentRecord record : graduationStudentRecords) {
                 System.out.println("processing: " + record.getStudentID());
                 try {
@@ -94,13 +94,42 @@ public class TraxBatchServiceImpl implements TraxBatchService {
         return false;
     }
 
-    private List<GraduationStudentRecord> filterSccpAndNonGradPrograms(List<GraduationStudentRecord> graduationStudentRecordList){
-        return listFilters.filterGraduationStudentRecordList(
-                g -> !g.getProgram().toLowerCase().contains("sccp") && !g.getProgram().toLowerCase().contains("noprog"),
-                graduationStudentRecordList
+
+
+    @Override
+    public boolean runTest(Predicate<GraduationStudentRecord> optionalFilter) throws TraxBatchServiceException {
+        List<GraduationStudentRecord> graduationStudentRecords = getGraduationStudentRecordList(
+                filterSccpAndNonGradPrograms()
         );
+        if(optionalFilter != null){
+            graduationStudentRecords = listFilters.filterGraduationStudentRecordList(optionalFilter, graduationStudentRecords);
+        }
+        return false;
     }
 
+    /**
+     * Retrieves a list of student records that can be run through projected GRAD algo
+     * @param optionalFilter an optional predicate filter. Pass null if not interested in filtering
+     * @return filtered or non-filtered list
+     * @throws TraxBatchServiceException
+     */
+    private List<GraduationStudentRecord> getGraduationStudentRecordList(Predicate<GraduationStudentRecord> optionalFilter) throws TraxBatchServiceException {
+        List<GraduationStudentRecord> graduationStudentRecords = null;
+        try {
+            graduationStudentRecords = gradService.getProjectedGradStudentList();
+        } catch (GenericHTTPRequestServiceException | NotFoundException e) {
+            throw new TraxBatchServiceException("Failure to retrieve pens to process: " + e.getMessage());
+        }
+        return (optionalFilter != null) ? listFilters.filterGraduationStudentRecordList(optionalFilter, graduationStudentRecords) : graduationStudentRecords;
+    }
+
+
+    /**
+     * Convenience
+     * @param pen
+     * @return
+     * @throws NotFoundException
+     */
     private TraxGradComparatorDto getTraxGradComparatorDtoFromTrax(String pen) throws NotFoundException {
         TswTranDemogEntity tswTranDemogEntity = traxService.getTransDemogEntity(pen);
         if(tswTranDemogEntity == null){

@@ -22,4 +22,12 @@ public class ListFilters {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Convenience method for returning a predicate filter to eliminate sccp and noprog programs from the list
+     * @return filtered list without sccp and noprog programs
+     */
+    public static Predicate<GraduationStudentRecord> filterSccpAndNonGradPrograms(){
+        return g -> !g.getProgram().toLowerCase().contains("sccp") && !g.getProgram().toLowerCase().contains("noprog");
+    }
+
 }
