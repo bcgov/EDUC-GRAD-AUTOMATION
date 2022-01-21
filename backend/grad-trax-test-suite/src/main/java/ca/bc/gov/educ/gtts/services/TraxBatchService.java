@@ -11,10 +11,10 @@ import java.util.function.Predicate;
  */
 public interface TraxBatchService {
 
-    boolean runTest(List<String> pens) throws TraxBatchServiceException;
+    void runTest(List<String> pens) throws TraxBatchServiceException;
 
-    boolean runTest() throws TraxBatchServiceException;
+    void runTest() throws TraxBatchServiceException;
 
-    boolean runTest(Predicate<GraduationStudentRecord> optionalFilter) throws TraxBatchServiceException;
+    void runTest(Predicate<GraduationStudentRecord> optionalFilter) throws TraxBatchServiceException;
 
 }

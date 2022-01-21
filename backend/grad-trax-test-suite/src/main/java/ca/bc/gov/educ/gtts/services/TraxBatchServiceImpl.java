@@ -41,7 +41,7 @@ public class TraxBatchServiceImpl implements TraxBatchService {
     }
 
     @Override
-    public boolean runTest(List<String> pens) throws TraxBatchServiceException {
+    public void runTest(List<String> pens) throws TraxBatchServiceException {
         try {
             for (String pen : pens) {
                 System.out.print("Processing: " + pen);
@@ -63,48 +63,53 @@ public class TraxBatchServiceImpl implements TraxBatchService {
         } catch (GenericHTTPRequestServiceException | NotFoundException e) {
             throw new TraxBatchServiceException(e.getMessage());
         }
-        return true;
     }
 
     @Override
-    public boolean runTest() throws TraxBatchServiceException {
+    public void runTest() throws TraxBatchServiceException {
         List<GraduationStudentRecord> graduationStudentRecords = getGraduationStudentRecordList(
                 filterSccpAndNonGradPrograms()
         );
-            for (GraduationStudentRecord record : graduationStudentRecords) {
-                System.out.println("processing: " + record.getStudentID());
-                try {
-                    TraxGradComparatorDto traxGradComparatorDtoFromGrad = getTraxGradComparatorDtoFromGradAlgorithm(record);
-                    GradSearchStudent gradSearchStudent = gradService.getStudentByID(record.getStudentID().toString());
-                    TraxGradComparatorDto traxGradComparatorDtoFromTrax = getTraxGradComparatorDtoFromTrax(gradSearchStudent.getPen());
-                    Diff diffs = comparatorService.compareTraxGradDTOs(traxGradComparatorDtoFromTrax, traxGradComparatorDtoFromGrad);
-                    // if diffs, report
-                    if(diffs.hasChanges()){
-                        System.out.println("");
-                        reportService.reportDifferences(gradSearchStudent.getPen(), diffs);
-                    } else {
-                        System.out.println(" -- No differences.");
-                    }
-                } catch (NotFoundException | GenericHTTPRequestServiceException e) {
-                    System.out.println("Failed to process: " + record.getStudentID() + " due to: " + e.getMessage());
-                    continue;
-                }
-            }
-
-        return false;
+        testRunner(graduationStudentRecords);
     }
 
 
-
     @Override
-    public boolean runTest(Predicate<GraduationStudentRecord> optionalFilter) throws TraxBatchServiceException {
+    public void runTest(Predicate<GraduationStudentRecord> optionalFilter) throws TraxBatchServiceException {
         List<GraduationStudentRecord> graduationStudentRecords = getGraduationStudentRecordList(
                 filterSccpAndNonGradPrograms()
         );
         if(optionalFilter != null){
             graduationStudentRecords = listFilters.filterGraduationStudentRecordList(optionalFilter, graduationStudentRecords);
         }
-        return false;
+        testRunner(graduationStudentRecords);
+    }
+
+    /**
+     * Actually does the heavy lifting
+     * @param graduationStudentRecords
+     * @return
+     */
+    private void testRunner(List<GraduationStudentRecord> graduationStudentRecords){
+        for (GraduationStudentRecord record : graduationStudentRecords) {
+            System.out.println("processing: " + record.getStudentID());
+            try {
+                TraxGradComparatorDto traxGradComparatorDtoFromGrad = getTraxGradComparatorDtoFromGradAlgorithm(record);
+                GradSearchStudent gradSearchStudent = gradService.getStudentByID(record.getStudentID().toString());
+                TraxGradComparatorDto traxGradComparatorDtoFromTrax = getTraxGradComparatorDtoFromTrax(gradSearchStudent.getPen());
+                Diff diffs = comparatorService.compareTraxGradDTOs(traxGradComparatorDtoFromTrax, traxGradComparatorDtoFromGrad);
+                // if diffs, report
+                if(diffs.hasChanges()){
+                    System.out.println("");
+                    reportService.reportDifferences(gradSearchStudent.getPen(), diffs);
+                } else {
+                    System.out.println(" -- No differences.");
+                }
+            } catch (NotFoundException | GenericHTTPRequestServiceException e) {
+                System.out.println("Failed to process: " + record.getStudentID() + " due to: " + e.getMessage());
+                continue;
+            }
+        }
     }
 
     /**
@@ -125,7 +130,7 @@ public class TraxBatchServiceImpl implements TraxBatchService {
 
 
     /**
-     * Convenience
+     * Convenience method for retrieving a TraxGradComparatorDTO from TRAX data
      * @param pen
      * @return
      * @throws NotFoundException
@@ -139,11 +144,25 @@ public class TraxBatchServiceImpl implements TraxBatchService {
         return traxGradComparisonTransformer.getTraxGradComparatorDto(tswTranDemogEntity, nonGradReasons);
     }
 
+    /**
+     * Convenience method for creating a TraxGradComparatorDTO from GRAD
+     * @param record
+     * @return
+     * @throws NotFoundException
+     * @throws GenericHTTPRequestServiceException
+     */
     private TraxGradComparatorDto getTraxGradComparatorDtoFromGradAlgorithm(GraduationStudentRecord record) throws NotFoundException, GenericHTTPRequestServiceException {
         GraduationData projectedGraduationData = gradService.runProjectedGraduation(record.getStudentID().toString(), record.getProgram());
         return traxGradComparisonTransformer.getTraxGradComparatorDto(projectedGraduationData);
     }
 
+    /**
+     * Convenience method for creating a TraxGradComparatorDTO from GRAD
+     * @param pen
+     * @return
+     * @throws NotFoundException
+     * @throws GenericHTTPRequestServiceException
+     */
     private TraxGradComparatorDto getTraxGradComparatorDtoFromGradAlgorithm(String pen) throws NotFoundException, GenericHTTPRequestServiceException {
         GradSearchStudent gradSearchStudent = gradService.getStudentByPen(pen);
         GraduationData projectedGraduationData = gradService.runProjectedGraduation(gradSearchStudent.getStudentID(), gradSearchStudent.getProgram());

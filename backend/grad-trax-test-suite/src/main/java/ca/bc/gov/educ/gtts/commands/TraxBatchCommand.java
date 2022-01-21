@@ -1,12 +1,10 @@
 package ca.bc.gov.educ.gtts.commands;
 
-import ca.bc.gov.educ.gtts.model.utils.TestPens;
 import ca.bc.gov.educ.gtts.services.TraxBatchService;
-import ca.bc.gov.educ.gtts.services.TraxService;
-import ca.bc.gov.educ.gtts.utilities.JSONUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import picocli.CommandLine;
+import static ca.bc.gov.educ.gtts.filters.ListFilters.filterByProgram;
 
 import java.util.concurrent.Callable;
 
@@ -19,19 +17,23 @@ import java.util.concurrent.Callable;
 public class TraxBatchCommand implements Callable<Integer> {
 
     private TraxBatchService traxBatchService;
-    private TraxService traxService;
 
     @CommandLine.Option(
             names = {"-f", "--file"},
             description = "A path to the file containing test pens.",
-            required = true
+            required = false
     )
     String filePath;
+    @CommandLine.Option(
+            names = {"-PF", "--programFilter"},
+            description = "Filter by program, examples include: 1950, 2004-EN, etc.",
+            required = false
+    )
+    String programFilter;
 
     @Autowired
-    public TraxBatchCommand(TraxBatchService traxBatchService, TraxService traxService) {
+    public TraxBatchCommand(TraxBatchService traxBatchService) {
         this.traxBatchService = traxBatchService;
-        this.traxService = traxService;
     }
 
     @Override
@@ -39,7 +41,11 @@ public class TraxBatchCommand implements Callable<Integer> {
         // TODO: update methods
         //TestPens testPens = JSONUtilities.serializeJSONFileToObject(filePath, TestPens.class);
         //traxBatchService.runTest(testPens.getTestPens());
-        traxBatchService.runTest();
+        if ((programFilter != null)) {
+            traxBatchService.runTest(filterByProgram(programFilter));
+        } else {
+            traxBatchService.runTest();
+        }
         return 0;
     }
 

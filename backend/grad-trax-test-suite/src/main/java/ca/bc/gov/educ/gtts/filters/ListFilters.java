@@ -30,4 +30,13 @@ public class ListFilters {
         return g -> !g.getProgram().toLowerCase().contains("sccp") && !g.getProgram().toLowerCase().contains("noprog");
     }
 
+    /**
+     * Convenience method for creating a filter by program predicate
+     * @param program no validity check on program
+     * @return
+     */
+    public static Predicate<GraduationStudentRecord> filterByProgram(String program){
+        return (program != null) ? g -> g.getProgram().toLowerCase().equals(program.toLowerCase()) : null;
+    }
+
 }
