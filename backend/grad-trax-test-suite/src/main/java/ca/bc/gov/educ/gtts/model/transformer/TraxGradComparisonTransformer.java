@@ -39,11 +39,14 @@ public class TraxGradComparisonTransformer {
     }
 
     /**
-     * Creates a comparator object from GRAD data
+     * Creates a comparator object from GRAD data, the object is formatted
+     * to conform with the data coming from TRAX using special filters.
+     * A call MUST be made to TRAX FIRST to populate a TraxGradComparatorDto
+     * as data from this object is used to create the returned TraxGradComparatorDto
      * @param graduationData
      * @return
      */
-    public TraxGradComparatorDto getTraxGradComparatorDto(GraduationData graduationData){
+    public TraxGradComparatorDto getTraxGradComparatorDto(GraduationData graduationData, TraxGradComparatorDto traxGradComparatorDtoFromTrax){
         TraxGradComparatorDto traxGradComparatorDto = new TraxGradComparatorDto();
         traxGradComparatorDto.setPen(graduationData.getGradStudent().getPen());
         traxGradComparatorDto.setGradReqtYear(

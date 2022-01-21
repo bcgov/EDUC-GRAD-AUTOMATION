@@ -48,7 +48,7 @@ public class TraxBatchServiceImpl implements TraxBatchService {
                 // get info from TRAX
                 TraxGradComparatorDto traxGradComparatorDtoFromTrax = getTraxGradComparatorDtoFromTrax(pen);
                 // fetch info from GRAD
-                TraxGradComparatorDto traxGradComparatorDtoFromGRAD = getTraxGradComparatorDtoFromGradAlgorithm(pen);
+                TraxGradComparatorDto traxGradComparatorDtoFromGRAD = getTraxGradComparatorDtoFromGradAlgorithm(pen, traxGradComparatorDtoFromTrax);
                 // compare
                 Diff diffs = comparatorService.compareTraxGradDTOs(traxGradComparatorDtoFromTrax, traxGradComparatorDtoFromGRAD);
                 // if diffs, report
@@ -94,9 +94,9 @@ public class TraxBatchServiceImpl implements TraxBatchService {
         for (GraduationStudentRecord record : graduationStudentRecords) {
             System.out.println("processing: " + record.getStudentID());
             try {
-                TraxGradComparatorDto traxGradComparatorDtoFromGrad = getTraxGradComparatorDtoFromGradAlgorithm(record);
                 GradSearchStudent gradSearchStudent = gradService.getStudentByID(record.getStudentID().toString());
                 TraxGradComparatorDto traxGradComparatorDtoFromTrax = getTraxGradComparatorDtoFromTrax(gradSearchStudent.getPen());
+                TraxGradComparatorDto traxGradComparatorDtoFromGrad = getTraxGradComparatorDtoFromGradAlgorithm(record, traxGradComparatorDtoFromTrax);
                 Diff diffs = comparatorService.compareTraxGradDTOs(traxGradComparatorDtoFromTrax, traxGradComparatorDtoFromGrad);
                 // if diffs, report
                 if(diffs.hasChanges()){
@@ -151,9 +151,9 @@ public class TraxBatchServiceImpl implements TraxBatchService {
      * @throws NotFoundException
      * @throws GenericHTTPRequestServiceException
      */
-    private TraxGradComparatorDto getTraxGradComparatorDtoFromGradAlgorithm(GraduationStudentRecord record) throws NotFoundException, GenericHTTPRequestServiceException {
+    private TraxGradComparatorDto getTraxGradComparatorDtoFromGradAlgorithm(GraduationStudentRecord record, TraxGradComparatorDto traxGradComparatorDtoFromTrax) throws NotFoundException, GenericHTTPRequestServiceException {
         GraduationData projectedGraduationData = gradService.runProjectedGraduation(record.getStudentID().toString(), record.getProgram());
-        return traxGradComparisonTransformer.getTraxGradComparatorDto(projectedGraduationData);
+        return traxGradComparisonTransformer.getTraxGradComparatorDto(projectedGraduationData, traxGradComparatorDtoFromTrax);
     }
 
     /**
@@ -163,10 +163,10 @@ public class TraxBatchServiceImpl implements TraxBatchService {
      * @throws NotFoundException
      * @throws GenericHTTPRequestServiceException
      */
-    private TraxGradComparatorDto getTraxGradComparatorDtoFromGradAlgorithm(String pen) throws NotFoundException, GenericHTTPRequestServiceException {
+    private TraxGradComparatorDto getTraxGradComparatorDtoFromGradAlgorithm(String pen, TraxGradComparatorDto traxGradComparatorDtoFromTrax) throws NotFoundException, GenericHTTPRequestServiceException {
         GradSearchStudent gradSearchStudent = gradService.getStudentByPen(pen);
         GraduationData projectedGraduationData = gradService.runProjectedGraduation(gradSearchStudent.getStudentID(), gradSearchStudent.getProgram());
-        return traxGradComparisonTransformer.getTraxGradComparatorDto(projectedGraduationData);
+        return traxGradComparisonTransformer.getTraxGradComparatorDto(projectedGraduationData, traxGradComparatorDtoFromTrax);
     }
 
 }
