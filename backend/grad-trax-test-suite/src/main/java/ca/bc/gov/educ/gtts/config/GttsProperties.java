@@ -1,9 +1,11 @@
 package ca.bc.gov.educ.gtts.config;
 
+import ca.bc.gov.educ.gtts.model.config.Program;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.util.UriTemplate;
 
+import java.util.List;
 import java.util.Map;
 
 @Configuration
@@ -14,13 +16,9 @@ public class GttsProperties {
     private String osHostedUrl;
     private Map<String, String> serviceEndpoints;
     private Map<String, String> auth;
+    private List<Program> requirementMappings;
 
     public GttsProperties() {}
-
-    public GttsProperties(String gradApiBaseUrl, Map<String, String> serviceEndpoints) {
-        this.gradApiBaseUrl = gradApiBaseUrl;
-        this.serviceEndpoints = serviceEndpoints;
-    }
 
     public String getGradApiBaseUrl() {
         return gradApiBaseUrl;
@@ -65,5 +63,13 @@ public class GttsProperties {
     public String getAndExpandEndPoint(String key, Map<String, String> uriVariables) {
         UriTemplate uriTemplate = new UriTemplate(this.getEndPoint(key));
         return uriTemplate.expand(uriVariables).toString();
+    }
+
+    public List<Program> getRequirementMappings() {
+        return requirementMappings;
+    }
+
+    public void setRequirementMappings(List<Program> requirementMappings) {
+        this.requirementMappings = requirementMappings;
     }
 }
