@@ -1,5 +1,6 @@
 package ca.bc.gov.educ.gtts.commands;
 
+import ca.bc.gov.educ.gtts.config.GttsProperties;
 import ca.bc.gov.educ.gtts.services.TraxBatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,7 @@ import java.util.concurrent.Callable;
 public class TraxBatchCommand implements Callable<Integer> {
 
     private TraxBatchService traxBatchService;
+    private GttsProperties properties;
 
     @CommandLine.Option(
             names = {"-f", "--file"},
@@ -32,8 +34,9 @@ public class TraxBatchCommand implements Callable<Integer> {
     String programFilter;
 
     @Autowired
-    public TraxBatchCommand(TraxBatchService traxBatchService) {
+    public TraxBatchCommand(TraxBatchService traxBatchService, GttsProperties gttsProperties) {
         this.traxBatchService = traxBatchService;
+        this.properties = gttsProperties;
     }
 
     @Override
@@ -41,6 +44,7 @@ public class TraxBatchCommand implements Callable<Integer> {
         // TODO: update methods
         //TestPens testPens = JSONUtilities.serializeJSONFileToObject(filePath, TestPens.class);
         //traxBatchService.runTest(testPens.getTestPens());
+        System.out.println("pause");
         if ((programFilter != null)) {
             traxBatchService.runTest(filterByProgram(programFilter));
         } else {
