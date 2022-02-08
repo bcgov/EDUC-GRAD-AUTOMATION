@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    hikari:
+      pool-name: educ-grad-trax-api-cp
+      maximum-pool-size: 10
+      connection-timeout: 60000
+      max-lifetime: 60000
+    url: ${TRAX_DB_CONNECTION_STRING}
+    username: ${TRAX_DB_USERNAME}
+    password: ${TRAX_DB_PASSWORD}
+    driver-class: oracle.jdbc.driver.OracleDriver
+    jpa:
+      show-sql: false
+      database-platform: org.hibernate.dialect.Oracle12cDialect
+      hibernate:
+        ddl-auto: none
