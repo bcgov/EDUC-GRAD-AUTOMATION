@@ -15,9 +15,9 @@ import java.net.http.HttpResponse;
 @RequestMapping("/")
 public class ComparisonController {
 
-    @GetMapping("{studentId}")
-    public ResponseEntity<CompareWithTraxResponse> compareWithTrax(@PathVariable String studentId) throws InterruptedException {
-        System.out.println("Processing: " + studentId);
+    @GetMapping("{studentId}/{program}")
+    public ResponseEntity<CompareWithTraxResponse> compareWithTrax(@PathVariable String studentId, @PathVariable String program) throws InterruptedException {
+        System.out.println("Processing: " + studentId + " with program: " + program);
         CompareWithTraxResponse compareWithTraxResponse = new CompareWithTraxResponse();
         compareWithTraxResponse.setStudentId(studentId);
         compareWithTraxResponse.setResponseCode(200);

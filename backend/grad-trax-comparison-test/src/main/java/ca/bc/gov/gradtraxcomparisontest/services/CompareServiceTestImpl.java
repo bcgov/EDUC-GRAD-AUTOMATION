@@ -37,27 +37,24 @@ public class CompareServiceTestImpl implements CompareServiceTest {
 
     @Override
     public void beginTest() throws TraxBatchServiceException {
-        List<String> ids = Arrays.asList(
-                new String[]{"one", "two", "three"}
-        );
         // get list of students
         List<GraduationStudentRecord> graduationStudentRecords = getGraduationStudentRecordList(
                 filterSccpAndNonGradPrograms()
         );
-        fetch(ids).subscribe(diffSubscriber);
+        fetch(graduationStudentRecords).subscribe(diffSubscriber);
     }
 
 
-    private Mono<CompareWithTraxResponse> getInfo(String id){
+    private Mono<CompareWithTraxResponse> getInfo(GraduationStudentRecord record){
         return webClient.get()
-                .uri("/" + id)
+                .uri("/" + record.getStudentID() + "/" + record.getProgram())
                 .retrieve()
                 .bodyToMono(CompareWithTraxResponse.class);
     }
 
-    private Flux fetch(List<String> ids) {
+    private Flux fetch(List<GraduationStudentRecord> records) {
         return Flux
-                .fromIterable(ids)
+                .fromIterable(records)
                 .flatMap(this::getInfo)
                 .buffer(2);
     }
