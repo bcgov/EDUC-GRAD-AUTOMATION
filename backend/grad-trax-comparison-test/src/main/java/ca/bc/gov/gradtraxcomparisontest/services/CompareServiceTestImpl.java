@@ -1,5 +1,6 @@
 package ca.bc.gov.gradtraxcomparisontest.services;
 
+import ca.bc.gov.gradtraxcomparisontest.model.CompareWithTraxResponse;
 import ca.bc.gov.gradtraxcomparisontest.reactive.DiffSubscriber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,11 +32,11 @@ public class CompareServiceTestImpl implements CompareServiceTest {
     }
 
 
-    private Mono<String> getInfo(String id){
+    private Mono<CompareWithTraxResponse> getInfo(String id){
         return webClient.get()
                 .uri("/" + id)
                 .retrieve()
-                .bodyToMono(String.class);
+                .bodyToMono(CompareWithTraxResponse.class);
     }
 
     private Flux fetch(List<String> ids) {

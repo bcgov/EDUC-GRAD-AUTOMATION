@@ -1,5 +1,6 @@
 package ca.bc.gov.gradtraxcomparisontest.reactive;
 
+import ca.bc.gov.gradtraxcomparisontest.model.CompareWithTraxResponse;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class DiffSubscriber implements Subscriber<List<String>> {
+public class DiffSubscriber implements Subscriber<List<CompareWithTraxResponse>> {
 
     private ApplicationContext context;
 
@@ -26,7 +27,7 @@ public class DiffSubscriber implements Subscriber<List<String>> {
     }
 
     @Override
-    public void onNext(List<String> strings) {
+    public void onNext(List<CompareWithTraxResponse> strings) {
         System.out.println("Processed: " + strings.toString() + " on thread " + Thread.currentThread().getName());
     }
 
