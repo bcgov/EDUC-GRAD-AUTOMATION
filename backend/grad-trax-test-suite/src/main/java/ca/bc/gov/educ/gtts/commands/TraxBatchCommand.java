@@ -44,7 +44,7 @@ public class TraxBatchCommand implements Callable<Integer> {
         // TODO: update methods
         //TestPens testPens = JSONUtilities.serializeJSONFileToObject(filePath, TestPens.class);
         //traxBatchService.runTest(testPens.getTestPens());
-        System.out.println("pause");
+        //System.out.println("pause");
         if ((programFilter != null)) {
             traxBatchService.runTest(filterByProgram(programFilter));
         } else {

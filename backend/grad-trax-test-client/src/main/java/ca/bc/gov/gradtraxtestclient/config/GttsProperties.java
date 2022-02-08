@@ -1,6 +1,6 @@
-package ca.bc.gov.educ.gtts.config;
+package ca.bc.gov.gradtraxtestclient.config;
 
-import ca.bc.gov.educ.gtts.model.config.Program;
+import ca.bc.gov.gradtraxtestclient.model.config.Program;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.util.UriTemplate;
