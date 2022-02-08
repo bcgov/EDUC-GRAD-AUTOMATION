@@ -1,5 +1,6 @@
 package ca.bc.gov.gradtraxcomparisontest;
 
+import ca.bc.gov.gradtraxcomparisontest.exception.TraxBatchServiceException;
 import ca.bc.gov.gradtraxcomparisontest.services.CompareServiceTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -20,7 +21,11 @@ public class GradTraxComparisonTestApplication {
 
     @EventListener(ApplicationReadyEvent.class)
     public void fireTest() {
-        compareServiceTest.beginTest();
+        try {
+            compareServiceTest.beginTest();
+        } catch (TraxBatchServiceException e) {
+            e.printStackTrace();
+        }
     }
 
 

@@ -1,0 +1,42 @@
+package ca.bc.gov.gradtraxcomparisontest.filters;
+
+import ca.bc.gov.gradtraxcomparisontest.model.dto.students.api.GraduationStudentRecord;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
+@Component
+public class ListFilters {
+
+    /**
+     * Filters GraduationStudentRecordLists based on passed in Lambdas
+     * @param filter a predicate
+     * @param graduationStudentRecordList the list to filter
+     * @return the filtered list
+     */
+    public List<GraduationStudentRecord> filterGraduationStudentRecordList(Predicate<GraduationStudentRecord> filter, List<GraduationStudentRecord> graduationStudentRecordList) {
+        return graduationStudentRecordList.stream()
+                .filter(filter)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Convenience method for returning a predicate filter to eliminate sccp and noprog programs from the list
+     * @return filtered list without sccp and noprog programs
+     */
+    public static Predicate<GraduationStudentRecord> filterSccpAndNonGradPrograms(){
+        return g -> !g.getProgram().toLowerCase().contains("sccp") && !g.getProgram().toLowerCase().contains("noprog");
+    }
+
+    /**
+     * Convenience method for creating a filter by program predicate
+     * @param program no validity check on program
+     * @return
+     */
+    public static Predicate<GraduationStudentRecord> filterByProgram(String program){
+        return (program != null) ? g -> g.getProgram().toLowerCase().equals(program.toLowerCase()) : null;
+    }
+
+}
