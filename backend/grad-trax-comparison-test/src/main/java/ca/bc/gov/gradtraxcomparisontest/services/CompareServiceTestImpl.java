@@ -13,11 +13,12 @@ import java.util.List;
 @Service
 public class CompareServiceTestImpl implements CompareServiceTest {
 
-    WebClient webClient = WebClient.create("http://localhost:8080");
+    WebClient webClient;
     DiffSubscriber diffSubscriber;
 
     @Autowired
-    public CompareServiceTestImpl(DiffSubscriber diffSubscriber) {
+    public CompareServiceTestImpl(WebClient webClient, DiffSubscriber diffSubscriber) {
+        this.webClient = webClient;
         this.diffSubscriber = diffSubscriber;
     }
 
