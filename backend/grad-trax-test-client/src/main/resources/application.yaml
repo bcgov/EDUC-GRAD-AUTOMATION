@@ -1,7 +1,4 @@
 spring:
-  main:
-    web-application-type: none
-    banner-mode: off
   datasource:
     hikari:
       pool-name: educ-grad-trax-api-cp
@@ -17,9 +14,6 @@ spring:
     database-platform: org.hibernate.dialect.Oracle12cDialect
     hibernate:
       ddl-auto: none
-logging:
-  level:
-    root: off
 gtts-properties:
   grad-api-base-url: https://dev.grad.gov.bc.ca/
   os-hosted-url: ${OS_HOSTED_URL}
@@ -205,4 +199,5 @@ gtts-properties:
         '915': "n/a"
         '916': "n/a"
         '917': "n/a"
+
 
