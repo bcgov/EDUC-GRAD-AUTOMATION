@@ -1,5 +1,7 @@
 package ca.bc.gov.gradtraxcomparisontest.config;
 
+import io.github.resilience4j.ratelimiter.RateLimiter;
+import io.github.resilience4j.ratelimiter.RateLimiterConfig;
 import org.javers.core.Javers;
 import org.javers.core.JaversBuilder;
 import org.modelmapper.ModelMapper;
@@ -17,6 +19,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.time.Duration;
+
 @EnableOAuth2Client
 @Configuration
 public class Config {
@@ -26,6 +30,16 @@ public class Config {
     @Autowired
     public Config(AppProperties appProperties) {
         this.appProperties = appProperties;
+    }
+
+    @Bean
+    public RateLimiter getRateLimiter(){
+        return RateLimiter.of("my-rate-limiter",
+                RateLimiterConfig.custom()
+                        .limitRefreshPeriod(Duration.ofSeconds(5))
+                        .limitForPeriod(3)
+                        .timeoutDuration(Duration.ofMinutes(1)) // max wait time for a request, if reached then error
+                        .build());
     }
 
     @Bean

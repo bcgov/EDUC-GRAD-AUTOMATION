@@ -1,4 +1,4 @@
-package ca.bc.gov.gradtraxcomparisontest.model.transformer;
+package ca.bc.gov.gradtraxcomparisontest.transformer;
 
 import ca.bc.gov.gradtraxcomparisontest.config.AppProperties;
 import ca.bc.gov.gradtraxcomparisontest.model.config.Program;

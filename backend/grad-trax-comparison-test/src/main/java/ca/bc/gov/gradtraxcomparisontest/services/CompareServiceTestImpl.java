@@ -13,6 +13,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
@@ -49,14 +50,14 @@ public class CompareServiceTestImpl implements CompareServiceTest {
         return webClient.get()
                 .uri("/" + record.getStudentID() + "/" + record.getProgram())
                 .retrieve()
-                .bodyToMono(CompareWithTraxResponse.class);
+                .bodyToMono(CompareWithTraxResponse.class)
+                .delayElement(Duration.ofSeconds(3)); // ATTEMPT to slow it down
     }
 
     private Flux fetch(List<GraduationStudentRecord> records) {
         return Flux
                 .fromIterable(records)
-                .flatMap(this::getInfo)
-                .buffer(2);
+                .flatMap(this::getInfo);
     }
 
     /**

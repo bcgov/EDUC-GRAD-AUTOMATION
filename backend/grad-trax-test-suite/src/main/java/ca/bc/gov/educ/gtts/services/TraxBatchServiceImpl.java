@@ -91,6 +91,7 @@ public class TraxBatchServiceImpl implements TraxBatchService {
      * @return
      */
     private void testRunner(List<GraduationStudentRecord> graduationStudentRecords){
+        System.out.println("Processing " + graduationStudentRecords.size() + " records found.");
         for (GraduationStudentRecord record : graduationStudentRecords) {
             System.out.println("processing: " + record.getStudentID());
             try {

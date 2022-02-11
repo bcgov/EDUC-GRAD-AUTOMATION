@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class DiffSubscriber implements Subscriber<List<CompareWithTraxResponse>> {
+public class DiffSubscriber implements Subscriber<CompareWithTraxResponse> {
 
     private ApplicationContext context;
 
@@ -27,8 +27,17 @@ public class DiffSubscriber implements Subscriber<List<CompareWithTraxResponse>>
     }
 
     @Override
-    public void onNext(List<CompareWithTraxResponse> strings) {
-        System.out.println("Processed: " + strings.toString() + " on thread " + Thread.currentThread().getName());
+    public void onNext(CompareWithTraxResponse response) {
+            if(response.getResponseCode() == 200){
+                System.out.println(response.getStudentId() + " : no changes.");
+            } else if(response.getResponseCode() == 404) {
+                System.out.println(response.getStudentId() + " : was not found.");
+            } else if(response.getResponseCode() == 500) {
+                System.out.println(response.getStudentId() + " : ERROR: " + response.getMessage());
+            } else {
+                System.out.println(response.getStudentId() + " : Changes: " + response.getMessage());
+            }
+        //System.out.println("Processed: " + strings.toString() + " on thread " + Thread.currentThread().getName());
     }
 
 
