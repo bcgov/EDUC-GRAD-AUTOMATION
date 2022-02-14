@@ -1,6 +1,7 @@
 package ca.bc.gov.restdemo.controllers;
 
 
+import ca.bc.gov.restdemo.exceptions.ConflictException;
 import ca.bc.gov.restdemo.exceptions.NotFoundException;
 import ca.bc.gov.restdemo.exceptions.ServiceUnavailableException;
 import ca.bc.gov.restdemo.exceptions.UnrecoverableException;
@@ -70,6 +71,13 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(
                 createEventDetails(ex.getMessage(), "Something has gone horribly wrong =("),
                 HttpStatus.INTERNAL_SERVER_ERROR
+        );
+    }
+
+    public final ResponseEntity<EventDetails> handleConflictException(ConflictException ex) {
+        return new ResponseEntity<>(
+                createEventDetails(ex.getMessage(), ""),
+                HttpStatus.BAD_REQUEST
         );
     }
 
