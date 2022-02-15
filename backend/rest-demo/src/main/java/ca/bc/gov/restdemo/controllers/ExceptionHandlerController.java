@@ -29,15 +29,7 @@ import java.time.LocalDateTime;
 @RestController
 public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
 
-    private MessageSource messageSource;
-
-    /**
-     * Constructor injection
-     * @param messageSource
-     */
-    @Autowired
-    public ExceptionHandlerController(MessageSource messageSource) {
-        this.messageSource = messageSource;
+    public ExceptionHandlerController() {
     }
 
     /**
@@ -74,6 +66,7 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
         );
     }
 
+    @ExceptionHandler(ConflictException.class)
     public final ResponseEntity<EventDetails> handleConflictException(ConflictException ex) {
         return new ResponseEntity<>(
                 createEventDetails(ex.getMessage(), ""),

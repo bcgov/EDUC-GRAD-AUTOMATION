@@ -45,8 +45,10 @@ public class RestDemoController {
     }
 
     @RequestMapping(
+            path = "/{id}",
             method = RequestMethod.GET,
             produces ="application/json"
+
     )
     ResponseEntity<?> readDemoObject(@PathVariable String id) throws ConflictException, UnrecoverableException, ServiceUnavailableException, NotFoundException {
         return ResponseEntity.ok(demoService.getDemoObject(id));
@@ -62,6 +64,7 @@ public class RestDemoController {
     }
 
     @RequestMapping(
+            path = "{id}",
             method = RequestMethod.DELETE
     )
     ResponseEntity<?> deleteDemoObject(String id) throws UnrecoverableException, ConflictException, ServiceUnavailableException {
