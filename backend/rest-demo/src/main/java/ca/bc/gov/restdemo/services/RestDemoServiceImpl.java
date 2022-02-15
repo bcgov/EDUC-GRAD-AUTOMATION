@@ -34,9 +34,6 @@ public class RestDemoServiceImpl implements RestDemoService {
         // If upstream service not available, throw ServiceUnavailableException
         // if not found, throw NotFoundException
         // if all hell breaks loose, throw an UnrecoverableException
-        if(id.equalsIgnoreCase("123")){
-            throw new NotFoundException("Not found");
-        }
         return DemoObject.builder().id(convertToUUIDFromString(id)).name("my demo object").build();
     }
 
