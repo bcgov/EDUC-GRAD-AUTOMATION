@@ -1,3 +1,3 @@
 FROM testcafe/testcafe
 
-COPY test_cases/ /tests/
+COPY ./auto_test/test_cases/ /tests/
