@@ -1,0 +1,33 @@
+
+name: docker-build-push
+on:
+  workflow_dispatch:
+
+env:
+  IMAGE_NAME: educ-grad-test-automation
+  DOCKER_ARTIFACTORY_REPO: docker-remote.artifacts.developer.gov.bc.ca
+  ARTIFACTORY_REPO: artifacts.developer.gov.bc.ca
+jobs:
+  build:
+    name: Build and push
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout main
+        uses: actions/checkout@main
+
+      - name: Login to Artifactory
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.ARTIFACTORY_REPO }}
+          username: ${{ secrets.ARTIFACTORY_USERNAME }}
+          password: ${{ secrets.ARTIFACTORY_ACCESS_TOKEN }}
+
+      - name: Build and push
+        id: testcafe_build
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: ./auto_test/Dockerfile
+          push: true
+          tags:  ${{ env.ARTIFACTORY_REPO }}/artifactory/${{ env.IMAGE_NAME }}:${{ github.sha }}
