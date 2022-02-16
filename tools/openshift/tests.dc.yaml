@@ -27,7 +27,7 @@ objects:
             deploymentConfig: "${APP_NAME}-${JOB_NAME}"
         spec:
           containers:
-            - image: image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/${REPO_NAME}-${JOB_NAME}:${TAG}
+            - image: ghcr.io/bcgov/${NAMESPACE}/${REPO_NAME}-${JOB_NAME}:${TAG}
               imagePullPolicy: Always
               name: "${APP_NAME}-${JOB_NAME}"
               resources:
