@@ -32,10 +32,10 @@ env:
   REPO_NAME: "educ-grad-test-automation"
   JOB_NAME: "master"
   APP_NAME_FULL: "grad-test-automation-master"
-  NAMESPACE: ${{ secrets.NAMESPACE_NO_ENV }}
-  COMMON_NAMESPACE: ${{ secrets.COMMON_NAMESPACE_NO_ENV }}
+  #NAMESPACE: ${{ secrets.NAMESPACE_NO_ENV }}
+  #COMMON_NAMESPACE: ${{ secrets.COMMON_NAMESPACE_NO_ENV }}
   TAG: "latest"
-  TARGET_ENV: "dev"
+  #TARGET_ENV: "dev"
   MIN_REPLICAS: "1"
   MAX_REPLICAS: "1"
   MIN_CPU: "75m"
@@ -158,7 +158,7 @@ jobs:
         
         # Process and apply deployment template
         oc process -f tools/openshift/tests.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }} -p JOB_NAME=${{ env.JOB_NAME }} -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE }} -p TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} \
-        
+        | oc create -f
         # Start rollout (if necessary) and follow it
         oc rollout latest dc/${{ env.IMAGE_NAME }} 2> /dev/null \
         || true && echo "Rollout in progress"
