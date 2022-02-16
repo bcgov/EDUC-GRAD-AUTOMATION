@@ -30,7 +30,7 @@ objects:
             - image: image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/${REPO_NAME}-${JOB_NAME}:${TAG}
               imagePullPolicy: Always
               name: "${APP_NAME}-${JOB_NAME}"
-              command: "chromium,firefox /tests/**/*.js"
+              args: ["chromium,firefox /tests/**/*.js"]
               resources:
                 requests:
                   cpu: "${MIN_CPU}"
