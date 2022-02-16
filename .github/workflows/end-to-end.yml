@@ -157,8 +157,7 @@ jobs:
         oc tag ${{ steps.push-image.outputs.registry-path }} ${{ env.REPO_NAME }}-${{ env.JOB_NAME }}:${{ env.TAG }}
         
         # Process and apply deployment template
-        oc process -f tools/openshift/tests.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }} -p JOB_NAME=${{ env.JOB_NAME }} -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE }} -p TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} \
-        | oc create -f
+        oc process -f tools/openshift/tests.dc.yaml -p APP_NAME=${{ env.APP_NAME }} -p REPO_NAME=${{ env.REPO_NAME }} -p JOB_NAME=${{ env.JOB_NAME }} -p NAMESPACE=${{ env.OPENSHIFT_NAMESPACE }} -p TAG=${{ env.TAG }} -p MIN_REPLICAS=${{ env.MIN_REPLICAS }} -p MAX_REPLICAS=${{ env.MAX_REPLICAS }} -p MIN_CPU=${{ env.MIN_CPU }} -p MAX_CPU=${{ env.MAX_CPU }} -p MIN_MEM=${{ env.MIN_MEM }} -p MAX_MEM=${{ env.MAX_MEM }} | oc create -f -
         # Start rollout (if necessary) and follow it
         oc rollout latest dc/${{ env.IMAGE_NAME }} 2> /dev/null \
         || true && echo "Rollout in progress"
