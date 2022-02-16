@@ -37,7 +37,6 @@ objects:
                 limits:
                   cpu: "${MAX_CPU}"
                   memory: "${MAX_MEM}"
-                  test: false
 parameters:
   - name: REPO_NAME
     description: Application repository name
