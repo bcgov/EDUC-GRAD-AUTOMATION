@@ -52,7 +52,7 @@ jobs:
     name: Build and deploy to OpenShift
     # ubuntu-20.04 can also be used.
     runs-on: ubuntu-18.04
-    environment: production
+    environment: test
 
     #outputs:
       #ROUTE: ${{ steps.deploy-and-expose.outputs.route }}
