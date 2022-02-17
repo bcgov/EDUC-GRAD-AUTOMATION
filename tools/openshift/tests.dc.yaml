@@ -30,7 +30,7 @@ objects:
             - image: image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/${REPO_NAME}-${JOB_NAME}:${TAG}
               imagePullPolicy: Always
               name: "${APP_NAME}-${JOB_NAME}"
-              args: ["--browser-init-timeout", "240000", "--no-sandbox", "--disable-dev-shm-usage", "firefox", "/tests/**/*.js"]
+              args: ["'firefox --disable-dev-shm-usage --no-sandbox'", "/tests/**/*.js"]
               resources:
                 requests:
                   cpu: "${MIN_CPU}"
