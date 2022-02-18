@@ -73,7 +73,7 @@ class RestDemoApplicationTests {
     }
 
     /**
-     * When an upstream service is unavailable, return a 405 Service Unavailabe
+     * When an upstream service is unavailable, return a 503 Service Unavailabe
      * @throws Exception
      */
     @Test
@@ -102,6 +102,10 @@ class RestDemoApplicationTests {
                 .andDo(print());
     }
 
+    /**
+     * Error thrown when trying to create an object that already exists
+     * @throws Exception
+     */
     @Test
     void testCreateDemoObject_objectAlreadyExists() throws Exception {
         UUID id = UUID.randomUUID();
@@ -114,6 +118,10 @@ class RestDemoApplicationTests {
                 .andDo(print());
     }
 
+    /**
+     * Tests that status is created when creating an object
+     * @throws Exception
+     */
     @Test
     void testCreateDemoObject_ok() throws Exception {
         DemoObject myDemoObject = DemoObject.builder().name("myDemoObject").build();
