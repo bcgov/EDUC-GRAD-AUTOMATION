@@ -68,7 +68,7 @@ public class RestDemoServiceImpl implements RestDemoService {
         try {
             uId = UUID.fromString(id);
         } catch (IllegalArgumentException e) {
-            throw new ConflictException(id + "is not a valid UUID format");
+            throw new ConflictException(id + " is not a valid UUID format");
         }
         return uId;
     }

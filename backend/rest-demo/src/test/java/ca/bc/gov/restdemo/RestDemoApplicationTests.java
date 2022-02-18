@@ -1,35 +1,26 @@
 package ca.bc.gov.restdemo;
 
-import ca.bc.gov.restdemo.controllers.ExceptionHandlerController;
-import ca.bc.gov.restdemo.controllers.RestDemoController;
 import ca.bc.gov.restdemo.exceptions.ConflictException;
 import ca.bc.gov.restdemo.exceptions.NotFoundException;
 import ca.bc.gov.restdemo.exceptions.ServiceUnavailableException;
 import ca.bc.gov.restdemo.exceptions.UnrecoverableException;
 import ca.bc.gov.restdemo.model.DemoObject;
-import ca.bc.gov.restdemo.services.RestDemoService;
 import ca.bc.gov.restdemo.services.RestDemoServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Before;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.UUID;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.hamcrest.Matchers.*;
@@ -60,7 +51,8 @@ class RestDemoApplicationTests {
         Mockito.when(restDemoService.getDemoObject(id)).thenThrow(new NotFoundException(message));
         mockMvc.perform(get("/" + id))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.message", is(message)));
+                .andExpect(jsonPath("$.message", is(message)))
+                .andDo(print());
 
     }
 
@@ -76,7 +68,8 @@ class RestDemoApplicationTests {
         Mockito.when(restDemoService.getDemoObject(id)).thenThrow(new ConflictException(message));
         mockMvc.perform(get("/" + id))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.message", is(message)));
+                .andExpect(jsonPath("$.message", is(message)))
+                .andDo(print());
     }
 
     /**
@@ -90,7 +83,8 @@ class RestDemoApplicationTests {
         Mockito.when(restDemoService.getDemoObject(id)).thenThrow(new ServiceUnavailableException(message));
         mockMvc.perform(get("/" + id))
                 .andExpect(status().isServiceUnavailable())
-                .andExpect(jsonPath("$.message", is(message)));
+                .andExpect(jsonPath("$.message", is(message)))
+                .andDo(print());
     }
 
     /**
@@ -104,7 +98,8 @@ class RestDemoApplicationTests {
         Mockito.when(restDemoService.getDemoObject(id)).thenThrow(new UnrecoverableException(message));
         mockMvc.perform(get("/" + id))
                 .andExpect(status().is5xxServerError())
-                .andExpect(jsonPath("$.message", is(message)));
+                .andExpect(jsonPath("$.message", is(message)))
+                .andDo(print());
     }
 
     @Test
@@ -115,7 +110,8 @@ class RestDemoApplicationTests {
         Mockito.when(restDemoService.createDemoObject(myDemoObject)).thenCallRealMethod();
         mockMvc.perform(post("/").contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.message", is("Demo object with id: " + id + " already exists.")));
+                .andExpect(jsonPath("$.message", is("Demo object with id: " + id + " already exists.")))
+                .andDo(print());
     }
 
     @Test
@@ -124,7 +120,8 @@ class RestDemoApplicationTests {
         String json = objectMapper.writeValueAsString(myDemoObject);
         Mockito.when(restDemoService.createDemoObject(myDemoObject)).thenCallRealMethod();
         mockMvc.perform(post("/").contentType(MediaType.APPLICATION_JSON).content(json))
-                .andExpect(status().isCreated());
+                .andExpect(status().isCreated())
+                .andDo(print());
     }
 
 }

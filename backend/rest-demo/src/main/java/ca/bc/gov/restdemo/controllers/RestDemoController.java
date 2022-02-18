@@ -48,7 +48,6 @@ public class RestDemoController {
             path = "/{id}",
             method = RequestMethod.GET,
             produces ="application/json"
-
     )
     ResponseEntity<?> readDemoObject(@PathVariable String id) throws ConflictException, UnrecoverableException, ServiceUnavailableException, NotFoundException {
         return ResponseEntity.ok(demoService.getDemoObject(id));
