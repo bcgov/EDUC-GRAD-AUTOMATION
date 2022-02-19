@@ -1,4 +1,4 @@
 #!/bin/sh
 
 echo "running testcafe..."
-testcafe firefox:headless test1.js
+testcafe 'chromium:headless --no-sandbox --disable-dev-shm-usage' -- test1.js
