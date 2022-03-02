@@ -1,4 +1,4 @@
-package ca.bc.gov.educ;
+package ca.bc.gov.educ.gmts;
 
 /**
  * Hello world!
