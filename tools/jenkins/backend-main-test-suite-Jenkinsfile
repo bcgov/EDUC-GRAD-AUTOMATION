@@ -1,6 +1,8 @@
 #!/usr/bin/env groovy
 pipeline {
-  agent any
+    agent {
+        label 'maven'
+    }
   //environment {
     // set up environment
   //}
