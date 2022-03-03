@@ -1,9 +1,9 @@
 #!/usr/bin/env groovy
 pipeline {
   agent any
-  environment {
+  //environment {
     // set up environment
-  }
+  //}
   parameters{
     gitParameter( 
               name: 'GRAD_BRANCH',
