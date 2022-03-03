@@ -1,0 +1,48 @@
+#!/usr/bin/env groovy
+pipeline {
+  agent any
+  environment {
+    // set up environment
+  }
+  parameters{
+    gitParameter( 
+              name: 'GRAD_BRANCH',
+              type: 'PT_BRANCH',
+              defaultValue: 'main',
+              useRepository: '',
+              branch: '',
+              branchFilter: ".*dev.*|.*main.*|.*release.*")      
+  }
+  stages {
+    stage('branch checkout') {
+      // checkout
+      steps{
+          echo "Checking out ${params.GRAD_BRANCH}"
+          checkout poll: false, 
+          scm: [$class: 'GitSCM', 
+          branches: [[name: "${params.GRAD_BRANCH}"]], 
+          doGenerateSubmoduleConfigurations: false, 
+          extensions: [[$class: 'CleanBeforeCheckout']], 
+          submoduleCfg: [], 
+          userRemoteConfigs: []
+        ]
+      }
+    }
+    stage('Initialize') {
+      steps {
+        dir('backend/grad-main-test-suite') {
+          // get secret and set environment vars
+          echo "Initializing..."
+          // set up stuff
+        }
+      }
+    }
+    stage('run tests') {
+      steps {
+        dir('backend/grad-main-test-suite') {
+          sh 'maven test'
+        }
+      }
+    }                   
+  }
+}

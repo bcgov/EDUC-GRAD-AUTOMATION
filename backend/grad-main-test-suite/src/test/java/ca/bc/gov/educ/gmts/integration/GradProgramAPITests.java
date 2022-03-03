@@ -1,4 +1,4 @@
-package ca.bc.gov.educ.gmts;
+package ca.bc.gov.educ.gmts.integration;
 
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -7,9 +7,9 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.assertTrue;
 
 /**
- * Integration testing for grad-course-api
+ * Integration testing for grad-program-api
  */
-public class GradCourseAPITests {
+public class GradProgramAPITests {
 
     @BeforeClass
     public void setup() {
@@ -22,10 +22,10 @@ public class GradCourseAPITests {
     }
 
     /**
-     * Tests /api/v1/course/check-french-immersion-course/pen/{pen}
+     * Tests /api/v1/program/gradrequirementtype
      */
     @Test
-    public void testCheckFrenchImmersionCourse(){
+    public void testGetGradRequirementType(){
         assertTrue(true);
     }
 
