@@ -40,7 +40,7 @@ pipeline {
     stage('run tests') {
       steps {
         dir('backend/grad-main-test-suite') {
-          sh 'maven test'
+          sh 'mvn test'
         }
       }
     }                   
