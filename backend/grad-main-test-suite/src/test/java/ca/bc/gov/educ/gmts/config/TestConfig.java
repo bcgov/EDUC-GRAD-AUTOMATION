@@ -1,5 +1,10 @@
 package ca.bc.gov.educ.gmts.config;
 
+import com.google.common.collect.ImmutableList;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestOperations;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
@@ -8,15 +13,13 @@ import org.springframework.security.oauth2.client.token.AccessTokenRequest;
 import org.springframework.security.oauth2.client.token.DefaultAccessTokenRequest;
 import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails;
 
-import java.util.Properties;
+import java.util.List;
 
 public class TestConfig {
 
-    private Properties properties;
     private static TestConfig instance;
 
     public static synchronized TestConfig getInstance(){
-
         if(instance == null){
             instance = new TestConfig();
         }
@@ -31,19 +34,35 @@ public class TestConfig {
      * Initiate, test for system properties, etc.
      */
     private static void init() {
-        Properties properties = System.getProperties();
         for(RequiredProperties prop : RequiredProperties.values()){
-            if(!properties.containsKey(prop.name())){
+            if(System.getenv(prop.name()) == null){
                 throw new RuntimeException("All properties must be set! Missing property: " + prop.name() + ". See RequiredProperties enum.");
             }
         }
     }
 
+    /**
+     * Sets up a OAuth2RestOperations template for OAUTH2 http(s) request to apis
+     * @return
+     */
     public OAuth2RestOperations getOauth2RestOperations() {
         AccessTokenRequest atr = new DefaultAccessTokenRequest();
-        return new OAuth2RestTemplate(getOauth2ProtectedResourceDetails(), new DefaultOAuth2ClientContext(atr));
+        OAuth2RestTemplate restTemplate = new OAuth2RestTemplate(getOauth2ProtectedResourceDetails(), new DefaultOAuth2ClientContext(atr));
+        List<HttpMessageConverter<?>> converters = restTemplate.getMessageConverters();
+        for (HttpMessageConverter<?> converter : converters) {
+            if (converter instanceof MappingJackson2HttpMessageConverter) {
+                MappingJackson2HttpMessageConverter jsonConverter = (MappingJackson2HttpMessageConverter) converter;
+                jsonConverter.setObjectMapper(new ObjectMapper());
+                jsonConverter.setSupportedMediaTypes(ImmutableList.of(new MediaType("application", "json", MappingJackson2HttpMessageConverter.DEFAULT_CHARSET), new MediaType("text", "javascript", MappingJackson2HttpMessageConverter.DEFAULT_CHARSET)));
+            }
+        }
+        return restTemplate;
     }
 
+    /**
+     * Sets authentication details
+     * @return
+     */
     protected OAuth2ProtectedResourceDetails getOauth2ProtectedResourceDetails() {
         ResourceOwnerPasswordResourceDetails resource;
         resource = new ResourceOwnerPasswordResourceDetails();
@@ -56,8 +75,17 @@ public class TestConfig {
         return resource;
     }
 
+    /**
+     * Convenience method for value for a property from a RequiredProperties enum
+     * @param prop Example: RequiredProperties.STUDENT_API_USERNAME
+     * @return the value set
+     */
     private String getProperty(RequiredProperties prop){
-        return properties.getProperty(prop.name());
+        return System.getenv(prop.name());
+    }
+
+    public String getApiEndPoint(RequiredProperties prop) {
+        return getProperty(prop) + "-" + getProperty(RequiredProperties.OS_HOSTED_URL);
     }
 
 }
