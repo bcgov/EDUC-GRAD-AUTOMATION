@@ -35,7 +35,7 @@ public class TestConfig {
      */
     private static void init() {
         for(RequiredProperties prop : RequiredProperties.values()){
-            if(System.getenv(prop.name()) == null){
+            if(System.getProperty(prop.name()) == null){
                 throw new RuntimeException("All properties must be set! Missing property: " + prop.name() + ". See RequiredProperties enum.");
             }
         }
@@ -81,7 +81,7 @@ public class TestConfig {
      * @return the value set
      */
     private String getProperty(RequiredProperties prop){
-        return System.getenv(prop.name());
+        return System.getProperty(prop.name());
     }
 
     public String getApiEndPoint(RequiredProperties prop) {

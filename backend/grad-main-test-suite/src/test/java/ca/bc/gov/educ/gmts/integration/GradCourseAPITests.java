@@ -34,19 +34,13 @@ public class GradCourseAPITests {
     }
 
     /**
-     * Tests /api/v1/course/check-french-immersion-course/pen/{pen}
+     * Tests /api/v1/course/course-restriction
      */
     @Test
-    public void testCourseRestriction(){
+    public void testCourseRestriction() throws GenericHTTPRequestServiceException, NotFoundException {
         String url = TestConfig.getInstance().getApiEndPoint(RequiredProperties.STUDENT_COURSE_API_URL) + "/api/v1/course/course-restriction?courseCode=ACSF" + "&courseLevel=11";
-        try {
-            CourseRestrictions restrictions = requestService.get(url, CourseRestrictions.class);
-        } catch (GenericHTTPRequestServiceException e) {
-            e.printStackTrace();
-        } catch (NotFoundException e) {
-            e.printStackTrace();
-        }
-        assertTrue(true);
+        CourseRestrictions restrictions = requestService.get(url, CourseRestrictions.class);
+        assertTrue(restrictions != null && restrictions.getCourseRestrictionList().size() > 0);
     }
 
 }
