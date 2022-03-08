@@ -32,9 +32,14 @@ pipeline {
     }
     stage('Initialize') {
       steps {
-        dir('backend/grad-main-test-suite') {
+        dir('backend/grad-main-test-suite/src/test/resources') {
           // get secret and set environment vars
-          echo "Initializing..."
+          echo "Initializing in ${env.WORKSPACE}"
+          script {
+            LOCAL_PROPERTIES = sh(script: 'oc get secret main-test-suite-config-secret -n ${OPENSHIFT_BUILD_NAMESPACE} -o go-template --template="{{.data.properties|base64decode}}"', returnStdout: true).trim()
+            echo LOCAL_PROPERTIES
+            writeFile file: '.properties', text: LOCAL_PROPERTIES
+          }
           // set up stuff
         }
       }
