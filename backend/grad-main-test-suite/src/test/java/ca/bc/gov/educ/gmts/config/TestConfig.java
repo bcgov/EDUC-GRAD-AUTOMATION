@@ -13,11 +13,15 @@ import org.springframework.security.oauth2.client.token.AccessTokenRequest;
 import org.springframework.security.oauth2.client.token.DefaultAccessTokenRequest;
 import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.Properties;
 
 public class TestConfig {
 
     private static TestConfig instance;
+    private Properties properties;
 
     public static synchronized TestConfig getInstance(){
         if(instance == null){
@@ -33,11 +37,18 @@ public class TestConfig {
     /**
      * Initiate, test for system properties, etc.
      */
-    private static void init() {
-        for(RequiredProperties prop : RequiredProperties.values()){
-            if(System.getProperty(prop.name()) == null){
-                throw new RuntimeException("All properties must be set! Missing property: " + prop.name() + ". See RequiredProperties enum.");
+    private void init() {
+        // load properties
+        try (InputStream is = this.getClass().getClassLoader().getResourceAsStream(".properties")) {
+            this.properties = new Properties();
+            this.properties.load(is);
+            for(RequiredProperties prop : RequiredProperties.values()){
+                if(this.properties.getProperty(prop.name()) == null){
+                    throw new RuntimeException("All properties must be set! Missing property: " + prop.name() + ". See RequiredProperties enum.");
+                }
             }
+        } catch (IOException e) {
+            throw new RuntimeException("Could not load properties file. Has one been set?");
         }
     }
 
@@ -81,7 +92,7 @@ public class TestConfig {
      * @return the value set
      */
     private String getProperty(RequiredProperties prop){
-        return System.getProperty(prop.name());
+        return this.properties.getProperty(prop.name());
     }
 
     public String getApiEndPoint(RequiredProperties prop) {
