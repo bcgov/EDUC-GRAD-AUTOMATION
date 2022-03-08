@@ -31,5 +31,5 @@ build/
 .vscode/
 .env
 **/pens-to-test.json
-
 *.env
+*.properties
