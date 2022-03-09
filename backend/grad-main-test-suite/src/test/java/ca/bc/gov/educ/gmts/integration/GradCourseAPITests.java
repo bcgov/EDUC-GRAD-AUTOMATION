@@ -18,6 +18,7 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static io.restassured.RestAssured.*;
 import static org.testng.Assert.assertTrue;
 
 /**
@@ -32,7 +33,6 @@ public class GradCourseAPITests {
     public void setup() {
         // set up
         this.requestService = new GenericHTTPRequestServiceImpl();
-
     }
 
     @AfterClass

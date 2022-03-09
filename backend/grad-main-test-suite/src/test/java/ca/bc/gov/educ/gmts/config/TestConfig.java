@@ -70,6 +70,12 @@ public class TestConfig {
         return restTemplate;
     }
 
+    public String getAccessToken(){
+        AccessTokenRequest atr = new DefaultAccessTokenRequest();
+        OAuth2RestTemplate restTemplate = new OAuth2RestTemplate(getOauth2ProtectedResourceDetails(), new DefaultOAuth2ClientContext(atr));
+        return restTemplate.getAccessToken().toString();
+    }
+
     /**
      * Sets authentication details
      * @return
