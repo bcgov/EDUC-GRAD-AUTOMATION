@@ -14,9 +14,8 @@ import java.util.Map;
 public class URLUtils {
 
     public static String getURL(RequiredProperties requiredProperties, String path, Map<String, String> params) throws URISyntaxException {
-        String base = TestConfig.getInstance().getApiEndPoint(requiredProperties);
         UriComponentsBuilder builder = UriComponentsBuilder.fromUri(
-                new URI(TestConfig.getInstance().getApiEndPoint(RequiredProperties.STUDENT_COURSE_API_URL)));
+                new URI(TestConfig.getInstance().getApiEndPoint(requiredProperties)));
         if(path != null && path.length() > 0){
             builder.path(path);
         }
