@@ -70,10 +70,14 @@ public class TestConfig {
         return restTemplate;
     }
 
+    /**
+     * Just get an access token.
+     * @return
+     */
     public String getAccessToken(){
         AccessTokenRequest atr = new DefaultAccessTokenRequest();
         OAuth2RestTemplate restTemplate = new OAuth2RestTemplate(getOauth2ProtectedResourceDetails(), new DefaultOAuth2ClientContext(atr));
-        return restTemplate.getAccessToken().toString();
+        return restTemplate.getAccessToken().getValue();
     }
 
     /**
