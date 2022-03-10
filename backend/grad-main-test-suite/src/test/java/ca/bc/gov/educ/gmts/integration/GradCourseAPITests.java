@@ -4,6 +4,7 @@ import ca.bc.gov.educ.gmts.config.RequiredProperties;
 import ca.bc.gov.educ.gmts.config.TestConfig;
 import ca.bc.gov.educ.gmts.exceptions.GenericHTTPRequestServiceException;
 import ca.bc.gov.educ.gmts.exceptions.NotFoundException;
+import ca.bc.gov.educ.gmts.model.courseapi.Course;
 import ca.bc.gov.educ.gmts.model.courseapi.CourseList;
 import ca.bc.gov.educ.gmts.model.courseapi.CourseRestriction;
 import ca.bc.gov.educ.gmts.model.courseapi.CourseRestrictions;
@@ -33,11 +34,11 @@ public class GradCourseAPITests {
 
     GenericHTTPRequestService requestService;
     private String TOKEN;
-    private static final String BASE_PATH = "/api/v1/course/";
-    private static final String COURSE_RESTRICTION_PATH = BASE_PATH + "course-restriction";
-    private static final String COURSE_RESTRICTION_SEARCH_PATH = BASE_PATH + "courserestrictionsearch";
+    private static final String BASE_PATH = "/api/v1/course";
+    private static final String COURSE_RESTRICTION_PATH = BASE_PATH + "/course-restriction";
+    private static final String COURSE_RESTRICTION_SEARCH_PATH = BASE_PATH + "/courserestrictionsearch";
     private static final String COURSE_RESTRICTION_COURSE_LIST_PATH = COURSE_RESTRICTION_PATH + "/course-list";
-    private static final String RESTRICTION_PATH = BASE_PATH + "restriction";
+    private static final String RESTRICTION_PATH = BASE_PATH + "/restriction";
 
     @BeforeClass
     public void setup() {
@@ -50,6 +51,32 @@ public class GradCourseAPITests {
     public void tearDown() {
         // tear down stuff here
         this.requestService = null;
+    }
+
+    /**
+     * Tests /api/v1/course/:courseLevel
+     * NOTE: on fix list
+     * @throws URISyntaxException
+     */
+    @Test
+    public void testGetCourseByCode() throws URISyntaxException {
+        String courseCode = "MTH";
+        String url = URLUtils.getURL(RequiredProperties.STUDENT_COURSE_API_URL, BASE_PATH + "/" + courseCode, null);
+        Course course = given().auth().oauth2(TOKEN).get(url).as(Course.class);
+        Assert.assertEquals(course.getCourseName(), "PRINCIPES DE MATHEMATIQUES 11");
+    }
+
+    /**
+     * Tests /api/v1/course/:courseCode/level/:courseLevel
+     * @throws URISyntaxException
+     */
+    @Test
+    public void testGetCourseByCodeAndCourseLevel() throws URISyntaxException {
+        String courseCode = "MTH";
+        String courseLevel = "11";
+        String url = URLUtils.getURL(RequiredProperties.STUDENT_COURSE_API_URL, BASE_PATH + "/" + courseCode + "/level/" + courseLevel, null);
+        Course course = given().auth().oauth2(TOKEN).get(url).as(Course.class);
+        Assert.assertEquals(course.getCourseName(), "PRINCIPES DE MATHEMATIQUES 11");
     }
 
     /**
