@@ -4,11 +4,7 @@ import ca.bc.gov.educ.gmts.config.RequiredProperties;
 import ca.bc.gov.educ.gmts.config.TestConfig;
 import ca.bc.gov.educ.gmts.exceptions.GenericHTTPRequestServiceException;
 import ca.bc.gov.educ.gmts.exceptions.NotFoundException;
-import ca.bc.gov.educ.gmts.model.courseapi.Course;
-import ca.bc.gov.educ.gmts.model.courseapi.CourseList;
-import ca.bc.gov.educ.gmts.model.courseapi.CourseRestriction;
-import ca.bc.gov.educ.gmts.model.courseapi.CourseRestrictions;
-import ca.bc.gov.educ.gmts.model.programapi.GraduationProgramCode;
+import ca.bc.gov.educ.gmts.model.courseapi.*;
 import ca.bc.gov.educ.gmts.services.GenericHTTPRequestService;
 import ca.bc.gov.educ.gmts.services.GenericHTTPRequestServiceImpl;
 import ca.bc.gov.educ.gmts.utils.URLUtils;
@@ -38,6 +34,7 @@ public class GradCourseAPITests {
     private static final String COURSE_RESTRICTION_PATH = BASE_PATH + "/course-restriction";
     private static final String COURSE_RESTRICTION_SEARCH_PATH = BASE_PATH + "/courserestrictionsearch";
     private static final String COURSE_RESTRICTION_COURSE_LIST_PATH = COURSE_RESTRICTION_PATH + "/course-list";
+    private static final String COURSE_REQUIREMENT_PATH = BASE_PATH + "/requirement";
     private static final String RESTRICTION_PATH = BASE_PATH + "/restriction";
 
     @BeforeClass
@@ -77,6 +74,32 @@ public class GradCourseAPITests {
         String url = URLUtils.getURL(RequiredProperties.STUDENT_COURSE_API_URL, BASE_PATH + "/" + courseCode + "/level/" + courseLevel, null);
         Course course = given().auth().oauth2(TOKEN).get(url).as(Course.class);
         Assert.assertEquals(course.getCourseName(), "PRINCIPES DE MATHEMATIQUES 11");
+    }
+
+    /**
+     * Tests /api/v1/course/requirement?pageNo=0&pageSize=50
+     */
+    @Test
+    public void testFindAllCourseRequirements() throws URISyntaxException {
+        Map<String, String> params = new HashMap<>(){
+            {
+                put("pageNo", "0");
+                put("pageSize", "11");
+            }
+        };
+        String url = URLUtils.getURL(RequiredProperties.STUDENT_COURSE_API_URL, COURSE_REQUIREMENT_PATH, params);
+        AllCourseRequirements[] requirements = given().auth().oauth2(TOKEN).get(url).as(AllCourseRequirements[].class);
+        Assert.assertEquals(requirements.length, 11);
+    }
+
+    public void testFindAllCourseRequirementsByRule() {
+        Map<String, String> params = new HashMap<>(){
+            {
+                put("pageNo", "0");
+                put("pageSize", "11");
+            }
+        };
+
     }
 
     /**
