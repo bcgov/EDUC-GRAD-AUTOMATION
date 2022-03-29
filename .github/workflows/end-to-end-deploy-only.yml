@@ -1,4 +1,4 @@
-name: DeployTests
+name: DeployTestsNoBuild
 
 env:
   OPENSHIFT_SERVER: ${{ secrets.OPENSHIFT_SERVER }}
