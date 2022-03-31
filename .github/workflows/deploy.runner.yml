@@ -1,0 +1,22 @@
+name: Deploy Runner on OpenShift
+on: 
+ workflow_dispatch:
+  
+jobs: 
+  install_runner: 
+    name: Install Runner 
+    runs-on: ubuntu-20.04 
+
+    steps: 
+      - name: Log in to OpenShift 
+        uses: redhat-actions/oc-login@v1 
+        with: 
+          openshift_server_url: ${{ secrets.OPENSHIFT_SERVER }} 
+          openshift_token: ${{ secrets.OPENSHIFT_TOKEN }} 
+      
+      - uses: redhat-actions/openshift-actions-runner-installer@v1 
+        with: 
+          github_pat: ${{ secrets.TEMP_PAT }}     # Personal access token with organization permissions
+          runner_location: redhat-actions                               # Install organization level runners
+          runner_image: quay.io/redhat-github-actions/java-runner-11    # Use our prebuilt Java runner image
+          runner_labels: openshift, java
