@@ -27,6 +27,8 @@ jobs:
         run: |
           echo "TEST_ADMIN_USERNAME: ${{ secrets.TEST_ADMIN_USERNAME }}"
           echo "TEST_ADMIN_PASSWORD: ${{ secrets.TEST_ADMIN_PASSWORD }}"
+          echo "BASE_URL: ${{ secrets.BASE_URL }}"
+          echo "TEST_PEN: ${{ secrets.TEST_PEN }}"
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
