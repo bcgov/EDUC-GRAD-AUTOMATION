@@ -2,6 +2,12 @@ name: Smoke Test
 on:
   workflow_dispatch:
   workflow_call:
+    inputs:
+      BASE_URL:
+        type: string
+        description: The base url to test against, like http://grad.gov.bc.ca. Defaults to dev,
+        required: false
+        default: https://dev.grad.gov.bc.ca/?login=noidir
     secrets:
       TEST_ADMIN_USERNAME:
         required: true
@@ -39,6 +45,6 @@ jobs:
         env:
           TEST_ADMIN_USERNAME: ${{ secrets.TEST_ADMIN_USERNAME }}
           TEST_ADMIN_PASSWORD: ${{ secrets.TEST_ADMIN_PASSWORD }}
-          BASE_URL: ${{ secrets.BASE_URL }}
+          BASE_URL: ${{ inputs.BASE_URL }}
           TEST_PEN: ${{ secrets.TEST_PEN }}
           API_HTML_STATUS_CLASS_THRESHOLD: 399
