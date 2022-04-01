@@ -1,15 +1,12 @@
 name: Smoke Test
-env:
-  DEFAULT_BASE_URL: https://dev.grad.gov.bc.ca/?login=noidir
 on:
-  workflow_dispatch:
   workflow_call:
     inputs:
       BASE_URL:
         type: string
         description: The base url to test against, like http://grad.gov.bc.ca. Defaults to dev,
         required: false
-        default: $DEFAULT_BASE_URL
+        default: https://dev.grad.gov.bc.ca/?login=noidir
     secrets:
       TEST_ADMIN_USERNAME:
         required: true
@@ -29,12 +26,6 @@ jobs:
           # explicit repo pull. may be another caller.
           repository: bcgov/EDUC-GRAD-TEST-AUTOMATION
           ref: main
-      - name: Sanity Check
-        run: |
-          echo "TEST_ADMIN_USERNAME: ${{ secrets.TEST_ADMIN_USERNAME }}"
-          echo "TEST_ADMIN_PASSWORD: ${{ secrets.TEST_ADMIN_PASSWORD }}"
-          echo "BASE_URL: ${{ inputs.BASE_URL == '' && inputs.BASE_URL.default || inputs.BASE_URL }}"
-          echo "TEST_PEN: ${{ secrets.TEST_PEN }}"
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
@@ -45,6 +36,6 @@ jobs:
         env:
           TEST_ADMIN_USERNAME: ${{ secrets.TEST_ADMIN_USERNAME }}
           TEST_ADMIN_PASSWORD: ${{ secrets.TEST_ADMIN_PASSWORD }}
-          BASE_URL: ${{ inputs.BASE_URL == '' && inputs.BASE_URL.default || inputs.BASE_URL }}
+          BASE_URL: ${{ inputs.BASE_URL }}
           TEST_PEN: ${{ secrets.TEST_PEN }}
           API_HTML_STATUS_CLASS_THRESHOLD: 399
