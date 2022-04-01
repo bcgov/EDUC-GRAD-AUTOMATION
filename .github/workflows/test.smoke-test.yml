@@ -13,8 +13,6 @@ on:
         required: true
       TEST_ADMIN_PASSWORD:
         required: true
-      BASE_URL:
-        required: true
       TEST_PEN:
         required: true
 jobs:
