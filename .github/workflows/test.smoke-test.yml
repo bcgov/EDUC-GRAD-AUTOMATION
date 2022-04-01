@@ -18,10 +18,11 @@ jobs:
       run:
         working-directory: frontend
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           # explicit repo pull. may be another caller.
-          name: bcgov/EDUC-GRAD-TEST-AUTOMATION
+          repository: bcgov/EDUC-GRAD-TEST-AUTOMATION
+          ref: main
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
