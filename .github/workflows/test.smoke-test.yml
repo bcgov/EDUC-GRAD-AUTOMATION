@@ -33,7 +33,7 @@ jobs:
         run: |
           echo "TEST_ADMIN_USERNAME: ${{ secrets.TEST_ADMIN_USERNAME }}"
           echo "TEST_ADMIN_PASSWORD: ${{ secrets.TEST_ADMIN_PASSWORD }}"
-          echo "BASE_URL: ${{ secrets.BASE_URL }}"
+          echo "BASE_URL: ${{ inputs.BASE_URL == '' && inputs.BASE_URL.default || inputs.BASE_URL }}"
           echo "TEST_PEN: ${{ secrets.TEST_PEN }}"
       - name: Setup Node
         uses: actions/setup-node@v1
@@ -45,6 +45,6 @@ jobs:
         env:
           TEST_ADMIN_USERNAME: ${{ secrets.TEST_ADMIN_USERNAME }}
           TEST_ADMIN_PASSWORD: ${{ secrets.TEST_ADMIN_PASSWORD }}
-          BASE_URL: ${{ inputs.BASE_URL == '' && $DEFAULT_BASE_URL || inputs.BASE_URL }}
+          BASE_URL: ${{ inputs.BASE_URL == '' && inputs.BASE_URL.default || inputs.BASE_URL }}
           TEST_PEN: ${{ secrets.TEST_PEN }}
           API_HTML_STATUS_CLASS_THRESHOLD: 399
