@@ -1,6 +1,7 @@
 name: Smoke Test
 on:
   workflow_dispatch:
+  workflow_call:
 jobs:
   SmokeTest:
     runs-on: windows-latest
