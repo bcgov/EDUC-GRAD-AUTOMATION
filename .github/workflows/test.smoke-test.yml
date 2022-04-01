@@ -1,0 +1,24 @@
+name: Smoke Test
+on:
+  workflow_dispatch:
+jobs:
+  SmokeTest:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+      - run: npm install
+      - run: npm run smoke-test
+        if: ${{ always() }}
+        env:
+          TEST_ADMIN_USERNAME: ${{ secrets.TEST_ADMIN_USERNAME }}
+          TEST_ADMIN_PASSWORD: ${{ secrets.TEST_ADMIN_PASSWORD }}
+          BASE_URL: ${{ secrets.DEV_BASE_URL }}
+          TEST_PEN: ${{ secrets.TEST_PEN }}
+          API_HTML_STATUS_CLASS_THRESHOLD: 399

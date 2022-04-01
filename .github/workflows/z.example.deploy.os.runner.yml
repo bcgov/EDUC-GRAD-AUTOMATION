@@ -1,3 +1,6 @@
+# IN DEVELOPMENT
+# Example to deploy a runner on openshift
+# https://developers.redhat.com/articles/2021/06/16/deploy-self-hosted-github-actions-runners-red-hat-openshift
 name: Deploy Runner on OpenShift
 on: 
  workflow_dispatch:
