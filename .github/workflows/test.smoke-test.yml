@@ -39,6 +39,6 @@ jobs:
         env:
           TEST_ADMIN_USERNAME: ${{ secrets.TEST_ADMIN_USERNAME }}
           TEST_ADMIN_PASSWORD: ${{ secrets.TEST_ADMIN_PASSWORD }}
-          BASE_URL: ${{ secrets.DEV_BASE_URL }}
+          BASE_URL: ${{ secrets.BASE_URL }}
           TEST_PEN: ${{ secrets.TEST_PEN }}
           API_HTML_STATUS_CLASS_THRESHOLD: 399
