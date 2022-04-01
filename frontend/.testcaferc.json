@@ -1,13 +1,7 @@
 {
     "_comment": "browsers should accept: edge -private, firefox -private-window, chrome -incognito",
-    "browsers": ["chrome -incognito"],
+    "browsers": ["chrome:headless -incognito"],
     "reporter": "list",
-    "screenshots": {
-        "path": "tests/screenshots/",
-        "pathPattern": "${DATE}_${TIME}/test-${TEST_INDEX}/${USERAGENT}/${TEST}.png",
-        "takeOnFails": false,
-        "fullPage": false
-    },
     "quarantineMode": false,
     "developmentMode": true,
     "skipJsErrors": true,
