@@ -18,15 +18,15 @@ jobs:
       run:
         working-directory: frontend
     steps:
-      - name: Sanity Check
-        run: |
-          echo "TEST_ADMIN_USERNAME: ${{ secrets.TEST_ADMIN_USERNAME }}"
-          echo "TEST_ADMIN_PASSWORD: ${{ secrets.TEST_ADMIN_PASSWORD }}"
       - uses: actions/checkout@v3
         with:
           # explicit repo pull. may be another caller.
           repository: bcgov/EDUC-GRAD-TEST-AUTOMATION
           ref: main
+      - name: Sanity Check
+        run: |
+          echo "TEST_ADMIN_USERNAME: ${{ secrets.TEST_ADMIN_USERNAME }}"
+          echo "TEST_ADMIN_PASSWORD: ${{ secrets.TEST_ADMIN_PASSWORD }}"
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
