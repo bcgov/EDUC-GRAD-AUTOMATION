@@ -19,4 +19,4 @@ jobs:
     name: testEnv
     steps:
     - run: |
-        echo "HOST_ROUTE="{{ env.HOST_ROUTE }}
+        echo "HOST_ROUTE="${{ env.HOST_ROUTE }}
