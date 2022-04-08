@@ -4,7 +4,7 @@ name: test
 
 env:
   TARGET_ENV: "dev"
-  HOST_ROUTE: "https://edx-d4cdde-${{ env.TARGET_ENV }}.apps.silver.devops.gov.bc.ca"
+  HOST_ROUTE: "https://edx-d4cdde-$TARGET_ENV.apps.silver.devops.gov.bc.ca"
 
 # Controls when the workflow will run
 on: 
