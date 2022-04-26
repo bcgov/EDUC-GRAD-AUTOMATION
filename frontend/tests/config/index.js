@@ -23,6 +23,11 @@ nconf.defaults({
     test: {
         pen: process.env.TEST_PEN,
         api_html_status_threshold: process.env.API_HTML_STATUS_CLASS_THRESHOLD
+    },
+    token: {
+        token_client_id: process.env.TOKEN_CLIENT_ID,
+        token_client_secret: process.env.TOKEN_CLIENT_SECRET,
+        token_endpoint: process.env.TOKEN_ENDPOINT
     }
 });
 

@@ -9,3 +9,8 @@ module.exports.credentials = Object.freeze({
       password: config.get('adminCredential:pass')
     }
   });
+
+//Token related config
+module.exports.token_client_id = config.get('token:token_client_id');
+module.exports.token_client_secret = config.get('token:token_client_secret');
+module.exports.token_endpoint = config.get('token:token_endpoint');
