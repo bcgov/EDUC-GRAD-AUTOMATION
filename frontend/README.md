@@ -31,6 +31,20 @@ Add a `.env` (gitignored) file to the root of this directory with your environme
 ...
 ```
 
+The following environment variables need to be present:
+
+```
+BASE_URL
+TEST_ADMIN_USERNAME
+TEST_ADMIN_PASSWORD
+TEST_PEN
+API_HTML_STATUS_CLASS_THRESHOLD
+TOKEN_CLIENT_ID
+TOKEN_CLIENT_SECRET
+TOKEN_ENDPOINT
+
+```
+
 or you can write a .bat or .sh script to set the values at runtime. This can be handy for triggering multiple tests.
 
 Example shell script:
