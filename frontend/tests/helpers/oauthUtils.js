@@ -2,7 +2,10 @@
 
 const axios = require('axios');
 const tokenData = require('../config/constants');
-
+/**
+ * Can be used to obtain an oauth token
+ * @type {{getToken(): Promise<any>}}
+ */
 const oauthUtils = {
     async getToken() {
         const params = {
